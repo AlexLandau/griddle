@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="GDL Editor"
+            extensions="kif"
+            icon="icons/sample.gif"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            class="net.alloyggp.griddle.editors.GdlEditor"
+            id="net.alloyggp.griddle.editors.GdlEditor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors.documentProviders">
+      <provider
+            class="org.eclipse.ui.editors.text.TextFileDocumentProvider"
+            id="org.eclipse.ui.editors.text.StorageDocumentProvider">
+      </provider>
+   </extension>
+   <extension
+      id="gdlValidator" name="GDL Validator" point="org.eclipse.core.resources.builders">
+      <builder>
+         <run class="net.alloyggp.griddle.builder.GdlBuilder">
+            <parameter name="optimize" value="true" />
+         </run>
+      </builder>
+   </extension>
+   <extension point="org.eclipse.ui.commands">
+    <command defaultHandler="net.alloyggp.griddle.builder.AddBuilder" id="net.alloyggp.griddle.addBuilder" name="Add GDL Validation">
+    </command>
+    <command defaultHandler="net.alloyggp.griddle.builder.RemoveBuilder" id="net.alloyggp.griddle.removeBuilder" name="Remove GDL Validation">
+    </command>
+</extension>
+   <extension point="org.eclipse.ui.menus">
+    <menuContribution allPopups="false" locationURI="popup:org.eclipse.ui.projectConfigure?after=additions">
+        <command commandId="net.alloyggp.griddle.addBuilder" style="push">
+        </command>
+        <command commandId="net.alloyggp.griddle.removeBuilder" style="push">
+        </command>
+    </menuContribution>
+   </extension>
+
+</plugin>
