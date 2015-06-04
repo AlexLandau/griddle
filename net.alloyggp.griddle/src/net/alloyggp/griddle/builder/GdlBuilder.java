@@ -1,7 +1,16 @@
 package net.alloyggp.griddle.builder;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
+import java.util.Set;
 
+import net.alloyggp.griddle.GdlProblem;
+import net.alloyggp.griddle.validator.Validator;
+import net.alloyggp.griddle.validator.Validators;
+
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -61,16 +70,9 @@ public class GdlBuilder extends IncrementalProjectBuilder {
 				if (resource.getType() == IResource.FILE && resource.exists()
 						&& ("kif".equalsIgnoreCase(resource.getFileExtension()) ||
 								"gdl".equalsIgnoreCase(resource.getFileExtension()))) {
-					//TODO: ...
-					//Can get contents... but we want the associated document, right?
 					resource.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
 
-					//TODO: Do correct marker creation code
-					IMarker marker = resource.createMarker(IMarker.PROBLEM);
-					marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_WARNING);
-					marker.setAttribute(IMarker.MESSAGE, "This is the marker message! " + Math.random());
-					marker.setAttribute(IMarker.CHAR_START, 2);
-					marker.setAttribute(IMarker.CHAR_END, 4);
+					parseAndAddMarkers(resource);
 				}
 			} catch (CoreException e) {
 				//TODO: Remove this?
@@ -92,19 +94,10 @@ public class GdlBuilder extends IncrementalProjectBuilder {
 				if (resource.getType() == IResource.FILE && resource.exists()
 						&& ("kif".equalsIgnoreCase(resource.getFileExtension()) ||
 								"gdl".equalsIgnoreCase(resource.getFileExtension()))) {
-					if (delta.getKind() == IResourceDelta.REMOVED) {
-						resource.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
-					} else {
-						//TODO: ...
-						//Can get contents... but we want the associated document, right?
-						resource.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
+					resource.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
 
-						//TODO: Do correct marker creation code
-						IMarker marker = resource.createMarker(IMarker.PROBLEM);
-						marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_WARNING);
-						marker.setAttribute(IMarker.MESSAGE, "This is the marker message!" + Math.random());
-						marker.setAttribute(IMarker.CHAR_START, 2);
-						marker.setAttribute(IMarker.CHAR_END, 4);
+					if (delta.getKind() != IResourceDelta.REMOVED) {
+						parseAndAddMarkers(resource);
 					}
 				}
 			} catch (CoreException e) {
@@ -132,6 +125,47 @@ public class GdlBuilder extends IncrementalProjectBuilder {
 				return true;
 			}
 		};
+	}
+
+	public static void parseAndAddMarkers(IResource resource) throws CoreException {
+		String fileContents;
+		try {
+			fileContents = getFileResourceAsString(resource);
+		} catch (IOException e) {
+			IMarker marker = resource.createMarker(IMarker.PROBLEM);
+			marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
+			marker.setAttribute(IMarker.MESSAGE, "Unknown IO error when parsing resource");
+			return;
+		}
+
+		Validator validator = Validators.getStandardValidator();
+		Set<GdlProblem> problems = validator.findProblems(fileContents);
+		for (GdlProblem problem : problems) {
+			IMarker marker = resource.createMarker(IMarker.PROBLEM);
+			if (problem.isError()) {
+				marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
+			} else {
+				marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_WARNING);
+			}
+			marker.setAttribute(IMarker.MESSAGE, problem.getMessage());
+			marker.setAttribute(IMarker.CHAR_START, problem.getPosition().getStart());
+			marker.setAttribute(IMarker.CHAR_END, problem.getPosition().getEnd());
+		}
+	}
+
+	private static String getFileResourceAsString(IResource resource)
+			throws CoreException, IOException {
+		InputStream fileContentStream = new BufferedInputStream(((IFile) resource).getContents());
+		StringBuilder sb = new StringBuilder();
+		while (true) {
+			int c = fileContentStream.read();
+			if (c == -1) {
+				break;
+			}
+			sb.append((char) c);
+		}
+		fileContentStream.close();
+		return sb.toString();
 	}
 
 	//TODO: Figure this out
