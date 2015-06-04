@@ -6,23 +6,26 @@ import java.util.List;
 
 import net.alloyggp.griddle.Position;
 
-public class Function {
+public class Function implements GdlVisitable {
 	private final String head;
 	private final List<Term> body;
 
+	private final Position headPosition;
 	private final Position position;
 
-	private Function(String head, List<Term> body, int left, int right) {
+	private Function(String head, int headLeft, int headRight, List<Term> body, int left, int right) {
 		if (head == null || body == null) {
 			throw new NullPointerException();
 		}
 		this.head = head;
 		this.body = body;
+
+		this.headPosition = new Position(headLeft, headRight);
 		this.position = new Position(left, right);
 	}
 
-	public static Function create(String head, List<Term> body, int left, int right) {
-		return new Function(head,
+	public static Function create(String head, int headLeft, int headRight, List<Term> body, int left, int right) {
+		return new Function(head, headLeft, headRight,
 				Collections.unmodifiableList(new ArrayList<Term>(body)),
 				left, right);
 	}
@@ -81,5 +84,14 @@ public class Function {
 	public String toString() {
 		return "Function [head=" + head + ", body=" + body + ", position="
 				+ position + "]";
+	}
+
+	@Override
+	public void accept(GdlVisitor visitor) {
+		visitor.visitFunction(this);
+		visitor.visitConstant(head, headPosition);
+		for (Term term : body) {
+			term.accept(visitor);
+		}
 	}
 }

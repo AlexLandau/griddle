@@ -2,7 +2,7 @@ package net.alloyggp.griddle.grammar;
 
 import net.alloyggp.griddle.Position;
 
-public class TopLevelGdl {
+public class TopLevelGdl implements GdlVisitable {
 	//Exactly one of these is non-null.
 	private final Sentence sentence;
 	private final Rule rule;
@@ -92,6 +92,15 @@ public class TopLevelGdl {
 	public String toString() {
 		return "TopLevelGdl [sentence=" + sentence + ", rule=" + rule
 				+ ", position=" + position + "]";
+	}
+
+	@Override
+	public void accept(GdlVisitor visitor) {
+		if (sentence != null) {
+			sentence.accept(visitor);
+		} else {
+			rule.accept(visitor);
+		}
 	}
 
 }

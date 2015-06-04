@@ -6,34 +6,36 @@ import java.util.List;
 
 import net.alloyggp.griddle.Position;
 
-public class Sentence {
+public class Sentence implements GdlVisitable {
 	private final String head;
 	//Body is nullable; a null body indicates the sentence was not in parentheses.
 	private final List<Term> body;
 
+	private final Position headPosition;
 	private final Position position;
 
-	private Sentence(String head, List<Term> body, int left, int right) {
+	private Sentence(String head, int headLeft, int headRight, List<Term> body, int left, int right) {
 		if (head == null) {
 			throw new NullPointerException();
 		}
 		this.head = head;
 		this.body = body;
 
+		this.headPosition = new Position(headLeft, headRight);
 		this.position = new Position(left, right);
 	}
 
-	public static Sentence create(String head, List<Term> body, int left, int right) {
+	public static Sentence create(String head, int headLeft, int headRight, List<Term> body, int left, int right) {
 		if (body == null) {
 			throw new NullPointerException();
 		}
-		return new Sentence(head,
+		return new Sentence(head, headLeft, headRight,
 				Collections.unmodifiableList(new ArrayList<Term>(body)),
 				left, right);
 	}
 
 	public static Sentence create(String head, int left, int right) {
-		return new Sentence(head, null, left, right);
+		return new Sentence(head, left, right, null, left, right);
 	}
 
 	public String getHead() {
@@ -93,5 +95,16 @@ public class Sentence {
 	public String toString() {
 		return "Sentence [head=" + head + ", body=" + body + ", position="
 				+ position + "]";
+	}
+
+	@Override
+	public void accept(GdlVisitor visitor) {
+		visitor.visitSentence(this);
+		visitor.visitConstant(head, headPosition);
+		if (body != null) {
+			for (Term term : body) {
+				term.accept(visitor);
+			}
+		}
 	}
 }

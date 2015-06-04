@@ -2,7 +2,7 @@ package net.alloyggp.griddle.grammar;
 
 import net.alloyggp.griddle.Position;
 
-public class Term {
+public class Term implements GdlVisitable {
 	//Exactly one of these is non-null.
 	private final String constantName;
 	private final String variableName;
@@ -119,6 +119,17 @@ public class Term {
 		return "Term [constantName=" + constantName + ", variableName="
 				+ variableName + ", function=" + function + ", position="
 				+ position + "]";
+	}
+
+	@Override
+	public void accept(GdlVisitor visitor) {
+		if (constantName != null) {
+			visitor.visitConstant(constantName, position);
+		} else if (variableName != null) {
+			visitor.visitVariable(variableName, position);
+		} else {
+			function.accept(visitor);
+		}
 	}
 
 }

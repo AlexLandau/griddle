@@ -1,6 +1,8 @@
 package net.alloyggp.griddle.validator;
 
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,6 +14,10 @@ public class CascadingValidator implements Validator {
 
 	private CascadingValidator(List<Validator> validators) {
 		this.validators = new ArrayList<Validator>(validators);
+	}
+
+	public static CascadingValidator create(Validator... validators) {
+		return new CascadingValidator(Arrays.asList(validators));
 	}
 
 	@Override

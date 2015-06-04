@@ -7,6 +7,12 @@ public class Validators {
 
 	public static Validator getStandardValidator() {
 		//TODO: Add configurable validator...
-		return ParenthesesValidator.INSTANCE;
+		return CascadingValidator.create(
+				ParenthesesValidator.INSTANCE,
+				ConfigurableValidator.create(getStandardConfiguration()));
+	}
+
+	public static ValidatorConfiguration getStandardConfiguration() {
+		return ValidatorConfiguration.createStandard();
 	}
 }

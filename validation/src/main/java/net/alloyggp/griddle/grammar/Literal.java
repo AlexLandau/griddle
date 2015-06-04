@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.alloyggp.griddle.Position;
 
-public class Literal {
+public class Literal implements GdlVisitable {
 	//Exactly one of these is non-null (with the two Terms for distinct
 	// counted together).
 	private final Sentence sentence;
@@ -160,5 +160,25 @@ public class Literal {
 				+ ", distinctTerm1=" + distinctTerm1 + ", distinctTerm2="
 				+ distinctTerm2 + ", disjunction=" + disjunction
 				+ ", position=" + position + "]";
+	}
+
+	@Override
+	public void accept(GdlVisitor visitor) {
+		visitor.visitLiteral(this);
+		if (sentence != null) {
+			sentence.accept(visitor);
+		} else if (negation != null) {
+			visitor.visitNegation(this);
+			negation.accept(visitor);
+		} else if (disjunction != null) {
+			visitor.visitDisjunction(this);
+			for (Literal disjunct : disjunction) {
+				disjunct.accept(visitor);
+			}
+		} else {
+			visitor.visitDistinct(this);
+			distinctTerm1.accept(visitor);
+			distinctTerm2.accept(visitor);
+		}
 	}
 }

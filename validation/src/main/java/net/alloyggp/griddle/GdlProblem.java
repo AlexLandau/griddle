@@ -1,5 +1,6 @@
 package net.alloyggp.griddle;
 
+
 public class GdlProblem {
 	private final Level level;
 	private final Position position;
@@ -14,6 +15,11 @@ public class GdlProblem {
 		this.level = level;
 		this.position = position;
 		this.message = message;
+	}
+
+	public static GdlProblem create(Level level, String message,
+			Position position) {
+		return new GdlProblem(level, position, message);
 	}
 
 	public static GdlProblem createError(String message, Position position) {
@@ -84,4 +90,5 @@ public class GdlProblem {
 		return "GdlProblem [level=" + level + ", position=" + position
 				+ ", message=" + message + "]";
 	}
+
 }

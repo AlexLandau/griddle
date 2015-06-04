@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.alloyggp.griddle.Position;
 
-public class Rule {
+public class Rule implements GdlVisitable {
 	private final Sentence head;
 	private final List<Literal> conjuncts;
 
@@ -82,6 +82,15 @@ public class Rule {
 	public String toString() {
 		return "Rule [head=" + head + ", conjuncts=" + conjuncts
 				+ ", position=" + position + "]";
+	}
+
+	@Override
+	public void accept(GdlVisitor visitor) {
+		visitor.visitRule(this);
+		head.accept(visitor);
+		for (Literal literal : conjuncts) {
+			literal.accept(visitor);
+		}
 	}
 
 }

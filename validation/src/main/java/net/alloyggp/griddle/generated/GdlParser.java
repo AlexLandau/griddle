@@ -6,11 +6,17 @@
 
 package net.alloyggp.griddle.generated;
 
-import java_cup.Lexer;
-import java_cup.runtime.*;
-import java.util.List;
 import java.util.LinkedList;
-import net.alloyggp.griddle.grammar.*;
+import java.util.List;
+
+import java_cup.Lexer;
+import java_cup.runtime.ComplexSymbolFactory;
+import net.alloyggp.griddle.grammar.Function;
+import net.alloyggp.griddle.grammar.Literal;
+import net.alloyggp.griddle.grammar.Rule;
+import net.alloyggp.griddle.grammar.Sentence;
+import net.alloyggp.griddle.grammar.Term;
+import net.alloyggp.griddle.grammar.TopLevelGdl;
 
 /** CUP v0.11a beta 20060608 generated parser.
   * @version Wed Jun 03 20:48:56 PDT 2015
@@ -27,7 +33,7 @@ public class GdlParser extends java_cup.runtime.lr_parser {
   public GdlParser(java_cup.runtime.Scanner s, java_cup.runtime.SymbolFactory sf) {super(s,sf);}
 
   /** Production table. */
-  protected static final short _production_table[][] = 
+  protected static final short _production_table[][] =
     unpackFromStrings(new String[] {
     "\000\024\000\002\002\004\000\002\002\004\000\002\002" +
     "\002\000\002\003\003\000\002\003\003\000\002\004\007" +
@@ -38,10 +44,11 @@ public class GdlParser extends java_cup.runtime.lr_parser {
     "\000\002\012\006" });
 
   /** Access to production table. */
-  public short[][] production_table() {return _production_table;}
+  @Override
+public short[][] production_table() {return _production_table;}
 
   /** Parse-action table. */
-  protected static final short[][] _action_table = 
+  protected static final short[][] _action_table =
     unpackFromStrings(new String[] {
     "\000\045\000\010\002\uffff\005\uffff\012\uffff\001\002\000" +
     "\010\002\012\005\006\012\005\001\002\000\012\002\ufffb" +
@@ -74,10 +81,11 @@ public class GdlParser extends java_cup.runtime.lr_parser {
     "\006\ufff5\012\ufff5\001\002" });
 
   /** Access to parse-action table. */
-  public short[][] action_table() {return _action_table;}
+  @Override
+public short[][] action_table() {return _action_table;}
 
   /** <code>reduce_goto</code> table. */
-  protected static final short[][] _reduce_table = 
+  protected static final short[][] _reduce_table =
     unpackFromStrings(new String[] {
     "\000\045\000\004\002\003\001\001\000\010\003\006\004" +
     "\010\005\007\001\001\000\002\001\001\000\002\001\001" +
@@ -97,19 +105,22 @@ public class GdlParser extends java_cup.runtime.lr_parser {
     "\001" });
 
   /** Access to <code>reduce_goto</code> table. */
-  public short[][] reduce_table() {return _reduce_table;}
+  @Override
+public short[][] reduce_table() {return _reduce_table;}
 
   /** Instance of action encapsulation class. */
   protected CUP$GdlParser$actions action_obj;
 
   /** Action encapsulation object initializer. */
-  protected void init_actions()
+  @Override
+protected void init_actions()
     {
       action_obj = new CUP$GdlParser$actions(this);
     }
 
   /** Invoke a user supplied parse action. */
-  public java_cup.runtime.Symbol do_action(
+  @Override
+public java_cup.runtime.Symbol do_action(
     int                        act_num,
     java_cup.runtime.lr_parser parser,
     java.util.Stack            stack,
@@ -121,15 +132,19 @@ public class GdlParser extends java_cup.runtime.lr_parser {
   }
 
   /** Indicates start state. */
-  public int start_state() {return 0;}
+  @Override
+public int start_state() {return 0;}
   /** Indicates start production. */
-  public int start_production() {return 1;}
+  @Override
+public int start_production() {return 1;}
 
   /** <code>EOF</code> Symbol index. */
-  public int EOF_sym() {return 0;}
+  @Override
+public int EOF_sym() {return 0;}
 
   /** <code>error</code> Symbol index. */
-  public int error_sym() {return 1;}
+  @Override
+public int error_sym() {return 1;}
 
 
 
@@ -168,7 +183,7 @@ class CUP$GdlParser$actions {
       switch (CUP$GdlParser$act_num)
         {
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 19: // function ::= POPEN CONSTANT termlist PCLOSE 
+          case 19: // function ::= POPEN CONSTANT termlist PCLOSE
             {
               Function RESULT =null;
 		int plleft = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-3)).left;
@@ -183,58 +198,58 @@ class CUP$GdlParser$actions {
 		int prleft = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).left;
 		int prright = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).right;
 		Object pr = (Object)((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
-		 RESULT = Function.create(c, ts, plleft, prright); 
+		 RESULT = Function.create(c, cleft, cright, ts, plleft, prright);
               CUP$GdlParser$result = parser.getSymbolFactory().newSymbol("function",8, ((java_cup.runtime.Symbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-3)), ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), RESULT);
             }
           return CUP$GdlParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 18: // term ::= function 
+          case 18: // term ::= function
             {
               Term RESULT =null;
 		int fleft = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).left;
 		int fright = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).right;
 		Function f = (Function)((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
-		 RESULT = Term.createFunction(f, fleft, fright); 
+		 RESULT = Term.createFunction(f, fleft, fright);
               CUP$GdlParser$result = parser.getSymbolFactory().newSymbol("term",7, ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), RESULT);
             }
           return CUP$GdlParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 17: // term ::= VARIABLE 
+          case 17: // term ::= VARIABLE
             {
               Term RESULT =null;
 		int vleft = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).left;
 		int vright = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).right;
 		String v = (String)((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
-		 RESULT = Term.createVariable(v, vleft, vright); 
+		 RESULT = Term.createVariable(v, vleft, vright);
               CUP$GdlParser$result = parser.getSymbolFactory().newSymbol("term",7, ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), RESULT);
             }
           return CUP$GdlParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 16: // term ::= CONSTANT 
+          case 16: // term ::= CONSTANT
             {
               Term RESULT =null;
 		int cleft = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).left;
 		int cright = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).right;
 		String c = (String)((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
-		 RESULT = Term.createConstant(c, cleft, cright); 
+		 RESULT = Term.createConstant(c, cleft, cright);
               CUP$GdlParser$result = parser.getSymbolFactory().newSymbol("term",7, ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), RESULT);
             }
           return CUP$GdlParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 15: // termlist ::= 
+          case 15: // termlist ::=
             {
               List<Term> RESULT =null;
-		 RESULT = new LinkedList<Term>(); 
+		 RESULT = new LinkedList<Term>();
               CUP$GdlParser$result = parser.getSymbolFactory().newSymbol("termlist",6, ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), RESULT);
             }
           return CUP$GdlParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 14: // termlist ::= termlist term 
+          case 14: // termlist ::= termlist term
             {
               List<Term> RESULT =null;
 		int tsleft = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-1)).left;
@@ -243,13 +258,13 @@ class CUP$GdlParser$actions {
 		int tleft = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).left;
 		int tright = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).right;
 		Term t = (Term)((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
-		 ts.add(t); RESULT = ts; 
+		 ts.add(t); RESULT = ts;
               CUP$GdlParser$result = parser.getSymbolFactory().newSymbol("termlist",6, ((java_cup.runtime.Symbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-1)), ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), RESULT);
             }
           return CUP$GdlParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 13: // literal ::= POPEN OR literallist PCLOSE 
+          case 13: // literal ::= POPEN OR literallist PCLOSE
             {
               Literal RESULT =null;
 		int plleft = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-3)).left;
@@ -261,13 +276,13 @@ class CUP$GdlParser$actions {
 		int prleft = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).left;
 		int prright = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).right;
 		Object pr = (Object)((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
-		 RESULT = Literal.createOr(ls, plleft, prright); 
+		 RESULT = Literal.createOr(ls, plleft, prright);
               CUP$GdlParser$result = parser.getSymbolFactory().newSymbol("literal",5, ((java_cup.runtime.Symbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-3)), ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), RESULT);
             }
           return CUP$GdlParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 12: // literal ::= POPEN DISTINCT term term PCLOSE 
+          case 12: // literal ::= POPEN DISTINCT term term PCLOSE
             {
               Literal RESULT =null;
 		int plleft = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-4)).left;
@@ -282,13 +297,13 @@ class CUP$GdlParser$actions {
 		int prleft = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).left;
 		int prright = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).right;
 		Object pr = (Object)((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
-		 RESULT = Literal.createDistinct(t1, t2, plleft, prright); 
+		 RESULT = Literal.createDistinct(t1, t2, plleft, prright);
               CUP$GdlParser$result = parser.getSymbolFactory().newSymbol("literal",5, ((java_cup.runtime.Symbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-4)), ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), RESULT);
             }
           return CUP$GdlParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 11: // literal ::= POPEN NOT literal PCLOSE 
+          case 11: // literal ::= POPEN NOT literal PCLOSE
             {
               Literal RESULT =null;
 		int plleft = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-3)).left;
@@ -300,34 +315,34 @@ class CUP$GdlParser$actions {
 		int prleft = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).left;
 		int prright = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).right;
 		Object pr = (Object)((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
-		 RESULT = Literal.createNot(l, plleft, prright); 
+		 RESULT = Literal.createNot(l, plleft, prright);
               CUP$GdlParser$result = parser.getSymbolFactory().newSymbol("literal",5, ((java_cup.runtime.Symbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-3)), ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), RESULT);
             }
           return CUP$GdlParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 10: // literal ::= sentence 
+          case 10: // literal ::= sentence
             {
               Literal RESULT =null;
 		int sleft = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).left;
 		int sright = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).right;
 		Sentence s = (Sentence)((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
-		 RESULT = Literal.createSentence(s, sleft, sright); 
+		 RESULT = Literal.createSentence(s, sleft, sright);
               CUP$GdlParser$result = parser.getSymbolFactory().newSymbol("literal",5, ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), RESULT);
             }
           return CUP$GdlParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 9: // literallist ::= 
+          case 9: // literallist ::=
             {
               List<Literal> RESULT =null;
-		 RESULT = new LinkedList<Literal>(); 
+		 RESULT = new LinkedList<Literal>();
               CUP$GdlParser$result = parser.getSymbolFactory().newSymbol("literallist",4, ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), RESULT);
             }
           return CUP$GdlParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 8: // literallist ::= literallist literal 
+          case 8: // literallist ::= literallist literal
             {
               List<Literal> RESULT =null;
 		int lsleft = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-1)).left;
@@ -336,13 +351,13 @@ class CUP$GdlParser$actions {
 		int lleft = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).left;
 		int lright = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).right;
 		Literal l = (Literal)((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
-		 ls.add(l); RESULT = ls; 
+		 ls.add(l); RESULT = ls;
               CUP$GdlParser$result = parser.getSymbolFactory().newSymbol("literallist",4, ((java_cup.runtime.Symbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-1)), ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), RESULT);
             }
           return CUP$GdlParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 7: // sentence ::= POPEN CONSTANT termlist PCLOSE 
+          case 7: // sentence ::= POPEN CONSTANT termlist PCLOSE
             {
               Sentence RESULT =null;
 		int plleft = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-3)).left;
@@ -357,25 +372,25 @@ class CUP$GdlParser$actions {
 		int prleft = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).left;
 		int prright = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).right;
 		Object pr = (Object)((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
-		 RESULT = Sentence.create(c, ts, plleft, prright); 
+		 RESULT = Sentence.create(c, cleft, cright, ts, plleft, prright);
               CUP$GdlParser$result = parser.getSymbolFactory().newSymbol("sentence",3, ((java_cup.runtime.Symbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-3)), ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), RESULT);
             }
           return CUP$GdlParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 6: // sentence ::= CONSTANT 
+          case 6: // sentence ::= CONSTANT
             {
               Sentence RESULT =null;
 		int cleft = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).left;
 		int cright = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).right;
 		String c = (String)((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
-		 RESULT = Sentence.create(c, cleft, cright); 
+		 RESULT = Sentence.create(c, cleft, cright);
               CUP$GdlParser$result = parser.getSymbolFactory().newSymbol("sentence",3, ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), RESULT);
             }
           return CUP$GdlParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 5: // rule ::= POPEN IMPLIES sentence literallist PCLOSE 
+          case 5: // rule ::= POPEN IMPLIES sentence literallist PCLOSE
             {
               Rule RESULT =null;
 		int plleft = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-4)).left;
@@ -390,46 +405,46 @@ class CUP$GdlParser$actions {
 		int prleft = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).left;
 		int prright = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).right;
 		Object pr = (Object)((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
-		 RESULT = Rule.create(s, ls, plleft, prright); 
+		 RESULT = Rule.create(s, ls, plleft, prright);
               CUP$GdlParser$result = parser.getSymbolFactory().newSymbol("rule",2, ((java_cup.runtime.Symbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-4)), ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), RESULT);
             }
           return CUP$GdlParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 4: // toplevel ::= sentence 
+          case 4: // toplevel ::= sentence
             {
               TopLevelGdl RESULT =null;
 		int sleft = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).left;
 		int sright = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).right;
 		Sentence s = (Sentence)((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
-		 RESULT = TopLevelGdl.create(s, sleft, sright); 
+		 RESULT = TopLevelGdl.create(s, sleft, sright);
               CUP$GdlParser$result = parser.getSymbolFactory().newSymbol("toplevel",1, ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), RESULT);
             }
           return CUP$GdlParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 3: // toplevel ::= rule 
+          case 3: // toplevel ::= rule
             {
               TopLevelGdl RESULT =null;
 		int rleft = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).left;
 		int rright = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).right;
 		Rule r = (Rule)((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
-		 RESULT = TopLevelGdl.create(r, rleft, rright); 
+		 RESULT = TopLevelGdl.create(r, rleft, rright);
               CUP$GdlParser$result = parser.getSymbolFactory().newSymbol("toplevel",1, ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), RESULT);
             }
           return CUP$GdlParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 2: // game ::= 
+          case 2: // game ::=
             {
               List<TopLevelGdl> RESULT =null;
-		 RESULT = new LinkedList<TopLevelGdl>(); 
+		 RESULT = new LinkedList<TopLevelGdl>();
               CUP$GdlParser$result = parser.getSymbolFactory().newSymbol("game",0, ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), RESULT);
             }
           return CUP$GdlParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 1: // $START ::= game EOF 
+          case 1: // $START ::= game EOF
             {
               Object RESULT =null;
 		int start_valleft = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-1)).left;
@@ -443,7 +458,7 @@ class CUP$GdlParser$actions {
           return CUP$GdlParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 0: // game ::= game toplevel 
+          case 0: // game ::= game toplevel
             {
               List<TopLevelGdl> RESULT =null;
 		int gleft = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-1)).left;
@@ -452,7 +467,7 @@ class CUP$GdlParser$actions {
 		int tlleft = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).left;
 		int tlright = ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()).right;
 		TopLevelGdl tl = (TopLevelGdl)((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
-		 g.add(tl); RESULT = g; 
+		 g.add(tl); RESULT = g;
               CUP$GdlParser$result = parser.getSymbolFactory().newSymbol("game",0, ((java_cup.runtime.Symbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-1)), ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), RESULT);
             }
           return CUP$GdlParser$result;
