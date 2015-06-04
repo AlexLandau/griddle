@@ -2,7 +2,7 @@ import java_cup.Lexer;
 import java_cup.runtime.*;
 import java.util.List;
 import java.util.LinkedList;
-import net.alloyggp.griddle.grammar.bare.*;
+import net.alloyggp.griddle.grammar.*;
 
 parser code {:
     public boolean syntaxErrors;
@@ -32,13 +32,13 @@ non terminal Function              function;
 game  ::=  game:g toplevel:tl   {: g.add(tl); RESULT = g; :}
     | /* empty list */          {: RESULT = new LinkedList<TopLevelGdl>(); :}
     ;
-toplevel ::= rule:r             {: RESULT = TopLevelGdl.create(r); :}
-    | sentence:s                {: RESULT = TopLevelGdl.create(s); :}
+toplevel ::= rule:r             {: RESULT = TopLevelGdl.create(r, rleft, rright); :}
+    | sentence:s                {: RESULT = TopLevelGdl.create(s, sleft, sright); :}
     ;
-rule ::= POPEN IMPLIES sentence:s literallist:ls PCLOSE {: RESULT = Rule.create(s, ls); :}
+rule ::= POPEN:pl IMPLIES sentence:s literallist:ls PCLOSE:pr {: RESULT = Rule.create(s, ls, plleft, prright); :}
     ;
-sentence ::= CONSTANT:c     {: RESULT = Sentence.create(c); :}
-    | POPEN CONSTANT:c termlist:ts PCLOSE {: RESULT = Sentence.create(c, ts); :}
+sentence ::= CONSTANT:c     {: RESULT = Sentence.create(c, cleft, cright); :}
+    | POPEN:pl CONSTANT:c termlist:ts PCLOSE:pr {: RESULT = Sentence.create(c, ts, plleft, prright); :}
     ;
 //constantlist ::= constantlist:cs CONSTANT:c {: cs.add(c); RESULT = cs; :}
 //    | /* empty list */       {: RESULT = new LinkedList<String>(); :}
@@ -46,17 +46,17 @@ sentence ::= CONSTANT:c     {: RESULT = Sentence.create(c); :}
 literallist ::= literallist:ls literal:l {: ls.add(l); RESULT = ls; :}
     | /* empty list */       {: RESULT = new LinkedList<Literal>(); :}
     ;
-literal ::= sentence:s            {: RESULT = Literal.createSentence(s); :}
-    | POPEN NOT literal:l PCLOSE {: RESULT = Literal.createNot(l); :}
-    | POPEN DISTINCT term:t1 term:t2 PCLOSE {: RESULT = Literal.createDistinct(t1, t2); :}
-    | POPEN OR literallist:ls PCLOSE {: RESULT = Literal.createOr(ls); :}
+literal ::= sentence:s            {: RESULT = Literal.createSentence(s, sleft, sright); :}
+    | POPEN:pl NOT literal:l PCLOSE:pr {: RESULT = Literal.createNot(l, plleft, prright); :}
+    | POPEN:pl DISTINCT term:t1 term:t2 PCLOSE:pr {: RESULT = Literal.createDistinct(t1, t2, plleft, prright); :}
+    | POPEN:pl OR literallist:ls PCLOSE:pr {: RESULT = Literal.createOr(ls, plleft, prright); :}
     ;
 termlist ::= termlist:ts term:t   {: ts.add(t); RESULT = ts; :}
     | /* empty list */            {: RESULT = new LinkedList<Term>(); :}
     ;
-term ::= CONSTANT:c               {: RESULT = Term.createConstant(c); :}
-    | VARIABLE:v                  {: RESULT = Term.createVariable(v); :}
-    | function:f                  {: RESULT = Term.createFunction(f); :}
+term ::= CONSTANT:c               {: RESULT = Term.createConstant(c, cleft, cright); :}
+    | VARIABLE:v                  {: RESULT = Term.createVariable(v, vleft, vright); :}
+    | function:f                  {: RESULT = Term.createFunction(f, fleft, fright); :}
     ;
-function ::= POPEN CONSTANT:c termlist:ts PCLOSE {: RESULT = Function.create(c, ts); :}
+function ::= POPEN:pl CONSTANT:c termlist:ts PCLOSE:pr {: RESULT = Function.create(c, ts, plleft, prright); :}
     ;

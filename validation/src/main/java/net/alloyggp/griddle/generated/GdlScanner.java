@@ -246,7 +246,10 @@ class GdlScanner implements java_cup.runtime.Scanner {
 
   /* user code: */
     private Symbol symbol(int type) {
-        return new Symbol(type, yyline, yycolumn);
+        return new Symbol(type, zzStartRead, zzMarkedPos);
+    }
+    private Symbol symbol(int type, Object value) {
+        return new Symbol(type, zzStartRead, zzMarkedPos, value);
     }
 
 
@@ -510,62 +513,8 @@ class GdlScanner implements java_cup.runtime.Scanner {
     while (true) {
       zzMarkedPosL = zzMarkedPos;
 
-      boolean zzR = false;
-      int zzCh;
-      int zzCharCount;
-      for (zzCurrentPosL = zzStartRead  ;
-           zzCurrentPosL < zzMarkedPosL ;
-           zzCurrentPosL += zzCharCount ) {
-        zzCh = Character.codePointAt(zzBufferL, zzCurrentPosL, zzMarkedPosL);
-        zzCharCount = Character.charCount(zzCh);
-        switch (zzCh) {
-        case '\u000B':
-        case '\u000C':
-        case '\u0085':
-        case '\u2028':
-        case '\u2029':
-          yyline++;
-          yycolumn = 0;
-          zzR = false;
-          break;
-        case '\r':
-          yyline++;
-          yycolumn = 0;
-          zzR = true;
-          break;
-        case '\n':
-          if (zzR)
-            zzR = false;
-          else {
-            yyline++;
-            yycolumn = 0;
-          }
-          break;
-        default:
-          zzR = false;
-          yycolumn += zzCharCount;
-        }
-      }
+      yychar+= zzMarkedPosL-zzStartRead;
 
-      if (zzR) {
-        // peek one character ahead if it is \n (if we have counted one line too much)
-        boolean zzPeek;
-        if (zzMarkedPosL < zzEndReadL)
-          zzPeek = zzBufferL[zzMarkedPosL] == '\n';
-        else if (zzAtEOF)
-          zzPeek = false;
-        else {
-          boolean eof = zzRefill();
-          zzEndReadL = zzEndRead;
-          zzMarkedPosL = zzMarkedPos;
-          zzBufferL = zzBuffer;
-          if (eof) 
-            zzPeek = false;
-          else 
-            zzPeek = zzBufferL[zzMarkedPosL] == '\n';
-        }
-        if (zzPeek) yyline--;
-      }
       zzAction = -1;
 
       zzCurrentPosL = zzCurrentPos = zzStartRead = zzMarkedPosL;
@@ -634,7 +583,7 @@ class GdlScanner implements java_cup.runtime.Scanner {
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1: 
-            { return symbol(Symbols.CONSTANT);
+            { return symbol(Symbols.CONSTANT, yytext());
             }
           case 10: break;
           case 2: 
@@ -650,7 +599,7 @@ class GdlScanner implements java_cup.runtime.Scanner {
             }
           case 13: break;
           case 5: 
-            { return symbol(Symbols.VARIABLE);
+            { return symbol(Symbols.VARIABLE, yytext());
             }
           case 14: break;
           case 6: 

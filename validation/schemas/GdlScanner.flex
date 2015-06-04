@@ -9,13 +9,17 @@ import java_cup.runtime.*;
 %unicode
 %cupsym Symbols
 %cup
-%line
-%column
+%char
+// %line
+// %column
 %caseless
 
 %{
     private Symbol symbol(int type) {
-        return new Symbol(type, yyline, yycolumn);
+        return new Symbol(type, zzStartRead, zzMarkedPos);
+    }
+    private Symbol symbol(int type, Object value) {
+        return new Symbol(type, zzStartRead, zzMarkedPos, value);
     }
 %}
 
@@ -47,8 +51,8 @@ Constant = {ConstantCharStart} {ConstantChar}*
 <YYINITIAL> "or"        { return symbol(Symbols.OR); }
 <YYINITIAL> "not"       { return symbol(Symbols.NOT); }
 
-<YYINITIAL> {Variable}  { return symbol(Symbols.VARIABLE); }
-<YYINITIAL> {Constant}  { return symbol(Symbols.CONSTANT); }
+<YYINITIAL> {Variable}  { return symbol(Symbols.VARIABLE, yytext()); }
+<YYINITIAL> {Constant}  { return symbol(Symbols.CONSTANT, yytext()); }
 
 <YYINITIAL> {Comment}   { /* ignore */ }
 <YYINITIAL> {WhiteSpace} { /* ignore */ }
