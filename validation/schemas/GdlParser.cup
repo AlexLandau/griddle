@@ -1,0 +1,62 @@
+import java_cup.Lexer;
+import java_cup.runtime.*;
+import java.util.List;
+import java.util.LinkedList;
+import net.alloyggp.griddle.grammar.bare.*;
+
+parser code {:
+    public boolean syntaxErrors;
+
+    Lexer lexer;
+
+    public GdlParser(Lexer lex, ComplexSymbolFactory sf) {
+        super(lex, sf);
+        lexer = lex;
+    }
+:}
+
+terminal        IMPLIES, POPEN, PCLOSE, DISTINCT, OR, NOT;
+terminal String CONSTANT, VARIABLE;
+
+non terminal List<TopLevelGdl>     game;
+non terminal TopLevelGdl           toplevel;
+non terminal Rule                  rule;
+non terminal Sentence              sentence;
+non terminal List<Literal>         literallist;
+//non terminal List<String>          constantlist;
+non terminal Literal               literal;
+non terminal List<Term>            termlist;
+non terminal Term                  term;
+non terminal Function              function;
+
+game  ::=  game:g toplevel:tl   {: g.add(tl); RESULT = g; :}
+    | /* empty list */          {: RESULT = new LinkedList<TopLevelGdl>(); :}
+    ;
+toplevel ::= rule:r             {: RESULT = TopLevelGdl.create(r); :}
+    | sentence:s                {: RESULT = TopLevelGdl.create(s); :}
+    ;
+rule ::= POPEN IMPLIES sentence:s literallist:ls PCLOSE {: RESULT = Rule.create(s, ls); :}
+    ;
+sentence ::= CONSTANT:c     {: RESULT = Sentence.create(c); :}
+    | POPEN CONSTANT:c termlist:ts PCLOSE {: RESULT = Sentence.create(c, ts); :}
+    ;
+//constantlist ::= constantlist:cs CONSTANT:c {: cs.add(c); RESULT = cs; :}
+//    | /* empty list */       {: RESULT = new LinkedList<String>(); :}
+//    ;
+literallist ::= literallist:ls literal:l {: ls.add(l); RESULT = ls; :}
+    | /* empty list */       {: RESULT = new LinkedList<Literal>(); :}
+    ;
+literal ::= sentence:s            {: RESULT = Literal.createSentence(s); :}
+    | POPEN NOT literal:l PCLOSE {: RESULT = Literal.createNot(l); :}
+    | POPEN DISTINCT term:t1 term:t2 PCLOSE {: RESULT = Literal.createDistinct(t1, t2); :}
+    | POPEN OR literallist:ls PCLOSE {: RESULT = Literal.createOr(ls); :}
+    ;
+termlist ::= termlist:ts term:t   {: ts.add(t); RESULT = ts; :}
+    | /* empty list */            {: RESULT = new LinkedList<Term>(); :}
+    ;
+term ::= CONSTANT:c               {: RESULT = Term.createConstant(c); :}
+    | VARIABLE:v                  {: RESULT = Term.createVariable(v); :}
+    | function:f                  {: RESULT = Term.createFunction(f); :}
+    ;
+function ::= POPEN CONSTANT:c termlist:ts PCLOSE {: RESULT = Function.create(c, ts); :}
+    ;

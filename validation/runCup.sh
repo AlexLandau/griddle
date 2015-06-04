@@ -1,4 +1,6 @@
-#Instructions at http://www2.cs.tum.edu/projects/cup/install.php
-#and http://www2.cs.tum.edu/projects/cup/docs.php#running
+#!/usr/bin/env bash
 
-java -jar lib/java-cup-11b.jar myparserspec.cup
+# Instructions at http://www2.cs.tum.edu/projects/cup/install.php
+# and http://www2.cs.tum.edu/projects/cup/docs.php#running
+
+java -jar lib/java-cup-11a.jar -destdir src/main/java/net/alloyggp/griddle/generated -package net.alloyggp.griddle.generated -parser GdlParser -symbols Symbols schemas/GdlParser.cup
