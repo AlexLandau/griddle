@@ -7,35 +7,39 @@ import java.util.List;
 import net.alloyggp.griddle.Position;
 
 public class Function implements GdlVisitable {
-	private final String head;
+	private final String name;
 	private final List<Term> body;
 
-	private final Position headPosition;
+	private final Position namePosition;
 	private final Position position;
 
-	private Function(String head, int headLeft, int headRight, List<Term> body, int left, int right) {
-		if (head == null || body == null) {
+	private Function(String name, int nameLeft, int nameRight, List<Term> body, int left, int right) {
+		if (name == null || body == null) {
 			throw new NullPointerException();
 		}
-		this.head = head;
+		this.name = name;
 		this.body = body;
 
-		this.headPosition = new Position(headLeft, headRight);
+		this.namePosition = new Position(nameLeft, nameRight);
 		this.position = new Position(left, right);
 	}
 
-	public static Function create(String head, int headLeft, int headRight, List<Term> body, int left, int right) {
-		return new Function(head, headLeft, headRight,
+	public static Function create(String name, int nameLeft, int nameRight, List<Term> body, int left, int right) {
+		return new Function(name, nameLeft, nameRight,
 				Collections.unmodifiableList(new ArrayList<Term>(body)),
 				left, right);
 	}
 
-	public String getHead() {
-		return head;
+	public String getName() {
+		return name;
 	}
 
 	public List<Term> getBody() {
 		return body;
+	}
+
+	public Position getNamePosition() {
+		return namePosition;
 	}
 
 	public Position getPosition() {
@@ -47,7 +51,7 @@ public class Function implements GdlVisitable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((body == null) ? 0 : body.hashCode());
-		result = prime * result + ((head == null) ? 0 : head.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result
 				+ ((position == null) ? 0 : position.hashCode());
 		return result;
@@ -67,10 +71,10 @@ public class Function implements GdlVisitable {
 				return false;
 		} else if (!body.equals(other.body))
 			return false;
-		if (head == null) {
-			if (other.head != null)
+		if (name == null) {
+			if (other.name != null)
 				return false;
-		} else if (!head.equals(other.head))
+		} else if (!name.equals(other.name))
 			return false;
 		if (position == null) {
 			if (other.position != null)
@@ -82,16 +86,55 @@ public class Function implements GdlVisitable {
 
 	@Override
 	public String toString() {
-		return "Function [head=" + head + ", body=" + body + ", position="
+		return "Function [name=" + name + ", body=" + body + ", position="
 				+ position + "]";
 	}
 
 	@Override
 	public void accept(GdlVisitor visitor) {
 		visitor.visitFunction(this);
-		visitor.visitConstant(head, headPosition);
+		visitor.visitConstant(name, namePosition);
 		for (Term term : body) {
 			term.accept(visitor);
 		}
+	}
+
+	public String getUserFriendlyString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("(")
+		  .append(name);
+		for (Term term : body) {
+			sb.append(" ")
+			  .append(term.getUserFriendlyString());
+		}
+		sb.append(")");
+		return sb.toString();
+	}
+
+	public boolean equalsIgnorePosition(Function other) {
+		if (other == null) {
+			return false;
+		}
+		if (!name.equals(other.name)) {
+			return false;
+		}
+		if (body.size() != other.body.size()) {
+			return false;
+		}
+		for (int i = 0; i < body.size(); i++) {
+			if (!body.get(i).equalsIgnorePosition(other.body.get(i))) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public boolean isGround() {
+		for (Term term : body) {
+			if (!term.isGround()) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

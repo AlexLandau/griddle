@@ -32,7 +32,7 @@ public class ConfigurableValidator implements Validator {
 			game = AnalyzedGame.parseAndAnalyze(gdlFile);
 		} catch (Exception e) {
 			return Collections.singleton(GdlProblem.createError(
-					"Problem parsing the game: " + e.getMessage(), new Position(0, 0)));
+					"Problem parsing the game: " + e.getMessage(), null));
 		}
 
 		Map<Level, ProblemReporter> reporters = new HashMap<Level, ProblemReporter>();

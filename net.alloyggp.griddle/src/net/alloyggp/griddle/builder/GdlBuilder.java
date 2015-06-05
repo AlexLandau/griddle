@@ -148,8 +148,10 @@ public class GdlBuilder extends IncrementalProjectBuilder {
 				marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_WARNING);
 			}
 			marker.setAttribute(IMarker.MESSAGE, problem.getMessage());
-			marker.setAttribute(IMarker.CHAR_START, problem.getPosition().getStart());
-			marker.setAttribute(IMarker.CHAR_END, problem.getPosition().getEnd());
+			if (problem.getPosition() != null) {
+				marker.setAttribute(IMarker.CHAR_START, problem.getPosition().getStart());
+				marker.setAttribute(IMarker.CHAR_END, problem.getPosition().getEnd());
+			}
 		}
 	}
 

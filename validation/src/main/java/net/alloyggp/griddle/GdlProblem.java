@@ -34,6 +34,9 @@ public class GdlProblem {
 		return level;
 	}
 
+	/**
+	 * This may return null, if the error is not associated with a particular section of code.
+	 */
 	public Position getPosition() {
 		return position;
 	}

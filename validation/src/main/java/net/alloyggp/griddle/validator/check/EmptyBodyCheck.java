@@ -2,6 +2,7 @@ package net.alloyggp.griddle.validator.check;
 
 import net.alloyggp.griddle.grammar.Function;
 import net.alloyggp.griddle.grammar.GdlVisitor;
+import net.alloyggp.griddle.grammar.Rule;
 import net.alloyggp.griddle.grammar.Sentence;
 import net.alloyggp.griddle.validator.AnalyzedGame;
 
@@ -17,16 +18,23 @@ public class EmptyBodyCheck implements Check {
 		game.visitAll(new GdlVisitor() {
 			@Override
 			public void visitSentence(Sentence sentence) {
-				if (sentence.getBody() != null && sentence.getBody().isEmpty()) {
-					reporter.report("Sentence with unnecessary parentheses; this may confuse some players.",
+				if (sentence.getBodyNullable() != null && sentence.getBodyNullable().isEmpty()) {
+					reporter.report("Sentence with unnecessary parentheses; this may confuse some gamers.",
 							sentence.getPosition());
 				}
 			}
 			@Override
 			public void visitFunction(Function function) {
 				if (function.getBody().isEmpty()) {
-					reporter.report("Function with unnecessary parentheses; this may confuse some players.",
+					reporter.report("Function with unnecessary parentheses; this may confuse some gamers.",
 							function.getPosition());
+				}
+			}
+			@Override
+			public void visitRule(Rule rule) {
+				if (rule.getConjuncts().isEmpty()) {
+					reporter.report("Rule with empty body; this can be written as a standalone sentence instead.",
+							rule.getPosition());
 				}
 			}
 		});

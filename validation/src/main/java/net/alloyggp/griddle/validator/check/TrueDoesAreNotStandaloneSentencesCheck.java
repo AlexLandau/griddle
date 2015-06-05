@@ -4,10 +4,10 @@ import net.alloyggp.griddle.grammar.Sentence;
 import net.alloyggp.griddle.grammar.TopLevelGdl;
 import net.alloyggp.griddle.validator.AnalyzedGame;
 
-public class TrueDoesNotAsStandaloneSentencesCheck implements Check {
-	public static final TrueDoesNotAsStandaloneSentencesCheck INSTANCE = new TrueDoesNotAsStandaloneSentencesCheck();
+public class TrueDoesAreNotStandaloneSentencesCheck implements Check {
+	public static final TrueDoesAreNotStandaloneSentencesCheck INSTANCE = new TrueDoesAreNotStandaloneSentencesCheck();
 
-	private TrueDoesNotAsStandaloneSentencesCheck() {
+	private TrueDoesAreNotStandaloneSentencesCheck() {
 		//Singleton
 	}
 
@@ -16,10 +16,10 @@ public class TrueDoesNotAsStandaloneSentencesCheck implements Check {
 		for (TopLevelGdl gdl : game.getRules()) {
 			if (gdl.isSentence()) {
 				Sentence sentence = gdl.getSentence();
-				if (sentence.getHead().equalsIgnoreCase("true")) {
+				if (sentence.getName().equalsIgnoreCase("true")) {
 					reporter.report("Sentences starting with 'true' are part of the game state and cannot be defined directly."
 							+ " They are determined each turn according to the 'init' and 'next' sentences.", sentence.getPosition());
-				} else if (sentence.getHead().equalsIgnoreCase("does")) {
+				} else if (sentence.getName().equalsIgnoreCase("does")) {
 					reporter.report("Sentences starting with 'does' are the moves chosen by each player and cannot be defined directly.",
 							sentence.getPosition());
 				}

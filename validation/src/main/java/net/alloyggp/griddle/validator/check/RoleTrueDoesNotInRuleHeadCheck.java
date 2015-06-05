@@ -16,16 +16,16 @@ public class RoleTrueDoesNotInRuleHeadCheck implements Check {
 		game.visitAll(new GdlVisitor() {
 			@Override
 			public void visitRule(Rule rule) {
-				if (rule.getHead().getHead().equalsIgnoreCase("role")) {
+				if (rule.getHead().getName().equalsIgnoreCase("role")) {
 					reporter.report("Roles cannot be defined in rules. They must be defined in standalone sentences.",
 							rule.getHead().getPosition());
 				}
-				if (rule.getHead().getHead().equalsIgnoreCase("true")) {
+				if (rule.getHead().getName().equalsIgnoreCase("true")) {
 					reporter.report("Sentences starting with 'true' are part of the game state and cannot be defined directly."
 							+ " They are determined each turn according to the 'init' and 'next' sentences.",
 							rule.getHead().getPosition());
 				}
-				if (rule.getHead().getHead().equalsIgnoreCase("does")) {
+				if (rule.getHead().getName().equalsIgnoreCase("does")) {
 					reporter.report("Sentences starting with 'does' are the moves chosen by each player and cannot be defined directly.",
 							rule.getHead().getPosition());
 				}

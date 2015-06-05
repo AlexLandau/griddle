@@ -132,4 +132,38 @@ public class Term implements GdlVisitable {
 		}
 	}
 
+	//TODO: Consider making this the toString() implementation
+	public String getUserFriendlyString() {
+		if (isConstant()) {
+			return constantName;
+		} else if (isVariable()) {
+			return variableName;
+		} else {
+			return function.getUserFriendlyString();
+		}
+	}
+
+	public boolean equalsIgnorePosition(Term other) {
+		if (other == null) {
+			return false;
+		}
+		if (isConstant()) {
+			return other.isConstant() && constantName.equals(other.constantName);
+		} else if (isVariable()) {
+			return other.isVariable() && variableName.equals(other.variableName);
+		} else {
+			return other.isFunction() && function.equalsIgnorePosition(other.function);
+		}
+	}
+
+	public boolean isGround() {
+		if (isConstant()) {
+			return true;
+		} else if (isVariable()) {
+			return false;
+		} else {
+			return function.isGround();
+		}
+	}
+
 }

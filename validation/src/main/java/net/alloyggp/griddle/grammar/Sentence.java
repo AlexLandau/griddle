@@ -7,45 +7,55 @@ import java.util.List;
 import net.alloyggp.griddle.Position;
 
 public class Sentence implements GdlVisitable {
-	private final String head;
+	private final String name;
 	//Body is nullable; a null body indicates the sentence was not in parentheses.
 	private final List<Term> body;
 
-	private final Position headPosition;
+	private final Position namePosition;
 	private final Position position;
 
-	private Sentence(String head, int headLeft, int headRight, List<Term> body, int left, int right) {
-		if (head == null) {
+	private Sentence(String name, int nameLeft, int nameRight, List<Term> body, int left, int right) {
+		if (name == null) {
 			throw new NullPointerException();
 		}
-		this.head = head;
+		this.name = name;
 		this.body = body;
 
-		this.headPosition = new Position(headLeft, headRight);
+		this.namePosition = new Position(nameLeft, nameRight);
 		this.position = new Position(left, right);
 	}
 
-	public static Sentence create(String head, int headLeft, int headRight, List<Term> body, int left, int right) {
+	public static Sentence create(String name, int nameLeft, int nameRight, List<Term> body, int left, int right) {
 		if (body == null) {
 			throw new NullPointerException();
 		}
-		return new Sentence(head, headLeft, headRight,
+		return new Sentence(name, nameLeft, nameRight,
 				Collections.unmodifiableList(new ArrayList<Term>(body)),
 				left, right);
 	}
 
-	public static Sentence create(String head, int left, int right) {
-		return new Sentence(head, left, right, null, left, right);
+	public static Sentence create(String name, int left, int right) {
+		return new Sentence(name, left, right, null, left, right);
 	}
 
-	public String getHead() {
-		return head;
+	public String getName() {
+		return name;
 	}
 
 	/**
 	 * If the sentence did not have parentheses, getBody() will return null.
 	 */
+	public List<Term> getBodyNullable() {
+		return body;
+	}
+
+	/**
+	 * Unlike getBodyNullable(), this returns an empty list if the body is null.
+	 */
 	public List<Term> getBody() {
+		if (body == null) {
+			return Collections.emptyList();
+		}
 		return body;
 	}
 
@@ -58,7 +68,7 @@ public class Sentence implements GdlVisitable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((body == null) ? 0 : body.hashCode());
-		result = prime * result + ((head == null) ? 0 : head.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result
 				+ ((position == null) ? 0 : position.hashCode());
 		return result;
@@ -78,10 +88,10 @@ public class Sentence implements GdlVisitable {
 				return false;
 		} else if (!body.equals(other.body))
 			return false;
-		if (head == null) {
-			if (other.head != null)
+		if (name == null) {
+			if (other.name != null)
 				return false;
-		} else if (!head.equals(other.head))
+		} else if (!name.equals(other.name))
 			return false;
 		if (position == null) {
 			if (other.position != null)
@@ -93,18 +103,19 @@ public class Sentence implements GdlVisitable {
 
 	@Override
 	public String toString() {
-		return "Sentence [head=" + head + ", body=" + body + ", position="
+		return "Sentence [name=" + name + ", body=" + body + ", position="
 				+ position + "]";
 	}
 
 	@Override
 	public void accept(GdlVisitor visitor) {
 		visitor.visitSentence(this);
-		visitor.visitConstant(head, headPosition);
+		visitor.visitConstant(name, namePosition);
 		if (body != null) {
 			for (Term term : body) {
 				term.accept(visitor);
 			}
 		}
 	}
+
 }
