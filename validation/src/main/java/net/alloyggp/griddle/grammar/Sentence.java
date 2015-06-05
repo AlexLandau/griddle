@@ -59,6 +59,10 @@ public class Sentence implements GdlVisitable {
 		return body;
 	}
 
+	public Position getNamePosition() {
+		return namePosition;
+	}
+
 	public Position getPosition() {
 		return position;
 	}
