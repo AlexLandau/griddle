@@ -22,7 +22,6 @@ public class InitBaseInputAreConstantCheck implements Check {
 					conjunct.accept(new GdlVisitor() {
 						@Override
 						public void visitSentence(Sentence sentence) {
-							Set<String> ancestors = game.getSentenceNameAncestors(sentence.getName());
 							if (game.isStateDependent(sentence.getName())) {
 								reporter.report("Sentences starting with the " + rule.getHead().getName()
 										+ " keyword should not depend on the current state of the game.", sentence.getPosition());
