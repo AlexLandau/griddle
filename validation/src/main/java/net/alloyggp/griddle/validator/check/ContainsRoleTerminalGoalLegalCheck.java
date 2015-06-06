@@ -15,7 +15,7 @@ public class ContainsRoleTerminalGoalLegalCheck implements Check {
 		boolean containsRole = false;
 		boolean containsGoal = false;
 		boolean containsLegal = false;
-		for (TopLevelGdl gdl : game.getRules()) {
+		for (TopLevelGdl gdl : game.getTopLevelComponents()) {
 			if (gdl.isSentence()) {
 				String sentenceName = gdl.getSentence().getName();
 				if (sentenceName.equalsIgnoreCase("terminal")) {

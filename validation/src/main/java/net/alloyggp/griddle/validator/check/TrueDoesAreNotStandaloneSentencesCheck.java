@@ -13,7 +13,7 @@ public class TrueDoesAreNotStandaloneSentencesCheck implements Check {
 
 	@Override
 	public void findProblems(AnalyzedGame game, final ProblemReporter reporter) {
-		for (TopLevelGdl gdl : game.getRules()) {
+		for (TopLevelGdl gdl : game.getTopLevelComponents()) {
 			if (gdl.isSentence()) {
 				Sentence sentence = gdl.getSentence();
 				if (sentence.getName().equalsIgnoreCase("true")) {

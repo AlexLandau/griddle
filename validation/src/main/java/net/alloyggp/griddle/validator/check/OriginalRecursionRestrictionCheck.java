@@ -52,7 +52,8 @@ public class OriginalRecursionRestrictionCheck implements Check {
 					Set<Term> termsInNonRecursivePositiveConjuncts,
 					Sentence sentence) {
 				String headName = rule.getHead().getName();
-				if (game.getSentenceNameAncestors(sentence.getName())
+				if (sentence.getName().equals(headName)
+						|| game.getSentenceNameAncestors(sentence.getName())
 						.contains(headName)) {
 					//This is in a cycle with the head.
 					Set<Term> problemTerms = findProblemTerms(sentence, rule,
@@ -93,7 +94,8 @@ public class OriginalRecursionRestrictionCheck implements Check {
 
 		for (Literal conjunct : rule.getConjuncts()) {
 			if (conjunct.isSentence()) {
-				if (!game.getSentenceNameAncestors(conjunct.getSentence().getName())
+				if (!conjunct.getSentence().getName().equals(headName)
+						&& !game.getSentenceNameAncestors(conjunct.getSentence().getName())
 						.contains(headName)) {
 					//Sentence is not in a cycle with the head; add its terms
 					results.addAll(conjunct.getSentence().getBody());

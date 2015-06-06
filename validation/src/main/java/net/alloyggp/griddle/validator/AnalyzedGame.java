@@ -18,24 +18,35 @@ import net.alloyggp.griddle.grammar.Sentence;
 import net.alloyggp.griddle.grammar.TopLevelGdl;
 
 public class AnalyzedGame {
-	private final List<TopLevelGdl> rules;
+	private final List<TopLevelGdl> topLevelGdl;
+	private final List<Rule> rules; //Just the rules from the top-level GDL
 	/**
 	 * Each name that is a key depends on each name that is in its associated set.
-	 */
-	private final Map<String, Set<String>> sentenceNameDependencyGraph;
-	/**
-	 * Each name that is a key depends on each name that is in its associated set.
-	 * Unlike the dependency graph, this includes indirect relations through
-	 * multiple rules.
+	 * This includes indirect relations through multiple rules.
 	 */
 	private final Map<String, Set<String>> sentenceNameAncestorGraph;
+	private final Set<String> stateDependentNames;
+	private final Set<String> actionDependentNames;
 
 	private AnalyzedGame(List<TopLevelGdl> rules,
-			Map<String, Set<String>> sentenceNameDependencyGraph,
-			Map<String, Set<String>> sentenceNameAncestorGraph) {
-		this.rules = Collections.unmodifiableList(rules);
-		this.sentenceNameDependencyGraph = Collections.unmodifiableMap(sentenceNameDependencyGraph);
+			Map<String, Set<String>> sentenceNameAncestorGraph,
+			Set<String> stateDependentNames,
+			Set<String> actionDependentNames) {
+		this.topLevelGdl = Collections.unmodifiableList(rules);
+		this.rules = collectRules(topLevelGdl);
 		this.sentenceNameAncestorGraph = Collections.unmodifiableMap(sentenceNameAncestorGraph);
+		this.stateDependentNames = Collections.unmodifiableSet(stateDependentNames);
+		this.actionDependentNames = Collections.unmodifiableSet(actionDependentNames);
+	}
+
+	private static List<Rule> collectRules(List<TopLevelGdl> gdls) {
+		List<Rule> results = new ArrayList<Rule>();
+		for (TopLevelGdl gdl : gdls) {
+			if (gdl.isRule()) {
+				results.add(gdl.getRule());
+			}
+		}
+		return Collections.unmodifiableList(results);
 	}
 
 	public static AnalyzedGame parseAndAnalyze(String gdlFile) throws Exception {
@@ -48,8 +59,31 @@ public class AnalyzedGame {
 		Map<String, Set<String>> sentenceNameDependencyGraph = generateSentenceNameDependencyGraph(rules);
 		Map<String, Set<String>> sentenceNameAncestorGraph = toAncestorGraph(sentenceNameDependencyGraph);
 
-		return new AnalyzedGame(rules, sentenceNameDependencyGraph,
-				sentenceNameAncestorGraph);
+		Set<String> stateDependentNames = getNamesMatchingOrDownstreamOf("true", sentenceNameAncestorGraph);
+		Set<String> actionDependentNames = getNamesMatchingOrDownstreamOf("does", sentenceNameAncestorGraph);
+
+		return new AnalyzedGame(rules,
+				sentenceNameAncestorGraph,
+				stateDependentNames,
+				actionDependentNames);
+	}
+
+	private static Set<String> getNamesMatchingOrDownstreamOf(String target,
+			Map<String, Set<String>> ancestorGraph) {
+		Set<String> results = new HashSet<String>();
+		for (String name : ancestorGraph.keySet()) {
+			if (name.equalsIgnoreCase(target)) {
+				results.add(name);
+			} else {
+				for (String candidate : ancestorGraph.get(name)) {
+					if (candidate.equalsIgnoreCase(target)) {
+						results.add(name);
+						break;
+					}
+				}
+			}
+		}
+		return results;
 	}
 
 	private static Map<String, Set<String>> toAncestorGraph(
@@ -96,26 +130,30 @@ public class AnalyzedGame {
 		return ruleDependencyGraph;
 	}
 
-	public List<TopLevelGdl> getRules() {
+	//TODO: Also switch over everything that should be using this
+	public List<Rule> getRules() {
 		return rules;
 	}
 
+	public List<TopLevelGdl> getTopLevelComponents() {
+		return topLevelGdl;
+	}
+
 	public void visitAll(GdlVisitor gdlVisitor) {
-		for (TopLevelGdl gdl : rules) {
+		for (TopLevelGdl gdl : topLevelGdl) {
 			gdl.accept(gdlVisitor);
 		}
-	}
-
-	public Map<String, Set<String>> getSentenceNameDependencyGraph() {
-		return sentenceNameDependencyGraph;
-	}
-
-	public Map<String, Set<String>> getSentenceNameAncestorGraph() {
-		return sentenceNameAncestorGraph;
 	}
 
 	public Set<String> getSentenceNameAncestors(String name) {
 		return sentenceNameAncestorGraph.get(name);
 	}
 
+	public boolean isStateDependent(String sentenceName) {
+		return stateDependentNames.contains(sentenceName);
+	}
+
+	public boolean isActionDependent(String sentenceName) {
+		return actionDependentNames.contains(sentenceName);
+	}
 }
