@@ -100,7 +100,9 @@ public class AnalyzedGame {
 			for (String key : ancestorGraph.keySet()) {
 				for (String value : new ArrayList<String>(ancestorGraph.get(key))) {
 					Set<String> nextLevelDependencies = ancestorGraph.get(value);
-					addedSomething |= ancestorGraph.get(key).addAll(nextLevelDependencies);
+					if (nextLevelDependencies != null) {
+						addedSomething |= ancestorGraph.get(key).addAll(nextLevelDependencies);
+					}
 				}
 			}
 		}
@@ -146,7 +148,12 @@ public class AnalyzedGame {
 	}
 
 	public Set<String> getSentenceNameAncestors(String name) {
-		return sentenceNameAncestorGraph.get(name);
+		Set<String> result = sentenceNameAncestorGraph.get(name);
+		if (result == null) {
+			return Collections.emptySet();
+		} else {
+			return Collections.unmodifiableSet(result);
+		}
 	}
 
 	public boolean isStateDependent(String sentenceName) {

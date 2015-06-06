@@ -11,7 +11,10 @@ import java.util.Set;
 
 import net.alloyggp.griddle.generated.ParserHelper;
 import net.alloyggp.griddle.grammar.TopLevelGdl;
+import net.alloyggp.griddle.validator.AnalyzedGame;
+import net.alloyggp.griddle.validator.ConfigurableValidator;
 import net.alloyggp.griddle.validator.ParenthesesValidator;
+import net.alloyggp.griddle.validator.Validators;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -22,6 +25,11 @@ public class ValidatorTest extends Assert {
 		List<TopLevelGdl> game = ParserHelper.parse(getGameReader("ticTacToe"));
 		//TODO: Actually check something here?
 		System.out.println(game);
+		String gameString = getGameString("ticTacToe");
+		AnalyzedGame analyzedGame = AnalyzedGame.parseAndAnalyze(gameString);
+
+		ConfigurableValidator validator = ConfigurableValidator.create(Validators.getStandardConfiguration());
+		validator.findProblems(gameString);
 	}
 
 	@Test

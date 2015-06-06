@@ -7,7 +7,7 @@
       <editor
             name="GDL Editor"
             extensions="kif"
-            icon="icons/sample.gif"
+            icon="icons/knight.gif"
             contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
             class="net.alloyggp.griddle.editors.GdlEditor"
             id="net.alloyggp.griddle.editors.GdlEditor">

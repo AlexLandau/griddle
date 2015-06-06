@@ -25,6 +25,6 @@ public class ParserHelper {
 		SymbolFactory symbolFactory = new DefaultSymbolFactory();
 		Symbol result = new GdlParser(lexer, symbolFactory).parse();
 		input.close();
-		return (List<TopLevelGdl>) result;
+		return (List<TopLevelGdl>) result.value;
 	}
 }

@@ -22,7 +22,9 @@ public class UnproducedSentenceNamesCheck implements Check {
 			rule.accept(new GdlVisitor() {
 				@Override
 				public void visitSentence(Sentence sentence) {
-					if (!producedSentenceNames.contains(sentence.getName())) {
+					//The lower-case check is for keywords that might be capitalized.
+					if (!producedSentenceNames.contains(sentence.getName())
+							&& !producedSentenceNames.contains(sentence.getName().toLowerCase())) {
 						reporter.report("Rule references a sentence with a name " + sentence.getName()
 								+ " that is not produced by any rule or standalone sentence.",
 								sentence.getPosition());
@@ -34,6 +36,8 @@ public class UnproducedSentenceNamesCheck implements Check {
 
 	private Set<String> getProducedSentenceNames(AnalyzedGame game) {
 		Set<String> results = new HashSet<String>();
+		results.add("true");
+		results.add("does");
 		for (TopLevelGdl gdl : game.getTopLevelComponents()) {
 			if (gdl.isSentence()) {
 				results.add(gdl.getSentence().getName());
