@@ -12,5 +12,5 @@ Require-Bundle: org.eclipse.ui,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: validation-0.1.jar,
- java-cup-11a.jar,
+ java-cup-11b-runtime.jar,
  .

@@ -19,6 +19,9 @@ public class Position {
 		return charEnd;
 	}
 
+	/**
+	 * These line numbers are 0-indexed.
+	 */
 	public int getLineNumber() {
 		return lineNumber;
 	}

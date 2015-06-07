@@ -49,6 +49,12 @@ public class RuleSafetyCheck implements Check {
 					Set<String> varsInDistinct = new HashSet<String>();
 					varsInDistinct.addAll(getVars(distinct.getDistinctTerm1()));
 					varsInDistinct.addAll(getVars(distinct.getDistinctTerm2()));
+					varsInDistinct.removeAll(supportedVariables);
+					if (!varsInDistinct.isEmpty()) {
+						reporter.report("Unsafe rule: The following variables are used in a distinct clause "
+								+ "but not defined in a positive conjunct of the rule: " + varsInDistinct,
+								distinct.getPosition());
+					}
 				}
 			});
 		}

@@ -15,7 +15,7 @@ dependencies {
 //TODO: Consider making this a Maven dependency
 //TODO: Use the runtime jar instead
     compile files(
-        'lib/java-cup-11b.jar'
+        'lib/java-cup-11b-runtime.jar'
     )
 }
 

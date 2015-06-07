@@ -1,6 +1,8 @@
 package net.alloyggp.griddle.generated;
 
-import java_cup.runtime.*;
+import java_cup.runtime.ComplexSymbolFactory;
+import java_cup.runtime.ComplexSymbolFactory.Location;
+import java_cup.runtime.Symbol;
 
 //Still working on this!
 %%
@@ -11,8 +13,8 @@ import java_cup.runtime.*;
 %cupsym Symbols
 %cup
 %char
-// %line
-// %column
+%line
+%column
 %caseless
 
 %{
