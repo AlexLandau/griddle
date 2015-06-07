@@ -1,18 +1,9 @@
-import java_cup.Lexer;
-import java_cup.runtime.*;
 import java.util.List;
 import java.util.LinkedList;
 import net.alloyggp.griddle.grammar.*;
 
 parser code {:
-    public boolean syntaxErrors;
 
-    Lexer lexer;
-
-    public GdlParser(Lexer lex, ComplexSymbolFactory sf) {
-        super(lex, sf);
-        lexer = lex;
-    }
 :}
 
 terminal        IMPLIES, POPEN, PCLOSE, DISTINCT, OR, NOT;
@@ -23,7 +14,6 @@ non terminal TopLevelGdl           toplevel;
 non terminal Rule                  rule;
 non terminal Sentence              sentence;
 non terminal List<Literal>         literallist;
-//non terminal List<String>          constantlist;
 non terminal Literal               literal;
 non terminal List<Term>            termlist;
 non terminal Term                  term;
@@ -32,31 +22,28 @@ non terminal Function              function;
 game  ::=  game:g toplevel:tl   {: g.add(tl); RESULT = g; :}
     | /* empty list */          {: RESULT = new LinkedList<TopLevelGdl>(); :}
     ;
-toplevel ::= rule:r             {: RESULT = TopLevelGdl.create(r, rleft, rright); :}
-    | sentence:s                {: RESULT = TopLevelGdl.create(s, sleft, sright); :}
+toplevel ::= rule:r             {: RESULT = TopLevelGdl.create(r, rxleft, rxright); :}
+    | sentence:s                {: RESULT = TopLevelGdl.create(s, sxleft, sxright); :}
     ;
-rule ::= POPEN:pl IMPLIES sentence:s literallist:ls PCLOSE:pr {: RESULT = Rule.create(s, ls, plleft, prright); :}
+rule ::= POPEN:pl IMPLIES sentence:s literallist:ls PCLOSE:pr {: RESULT = Rule.create(s, ls, plxleft, prxright); :}
     ;
-sentence ::= CONSTANT:c     {: RESULT = Sentence.create(c, cleft, cright); :}
-    | POPEN:pl CONSTANT:c termlist:ts PCLOSE:pr {: RESULT = Sentence.create(c, cleft, cright, ts, plleft, prright); :}
+sentence ::= CONSTANT:c     {: RESULT = Sentence.create(c, cxleft, cxright); :}
+    | POPEN:pl CONSTANT:c termlist:ts PCLOSE:pr {: RESULT = Sentence.create(c, cxleft, cxright, ts, plxleft, prxright); :}
     ;
-//constantlist ::= constantlist:cs CONSTANT:c {: cs.add(c); RESULT = cs; :}
-//    | /* empty list */       {: RESULT = new LinkedList<String>(); :}
-//    ;
 literallist ::= literallist:ls literal:l {: ls.add(l); RESULT = ls; :}
     | /* empty list */       {: RESULT = new LinkedList<Literal>(); :}
     ;
-literal ::= sentence:s            {: RESULT = Literal.createSentence(s, sleft, sright); :}
-    | POPEN:pl NOT literal:l PCLOSE:pr {: RESULT = Literal.createNot(l, plleft, prright); :}
-    | POPEN:pl DISTINCT term:t1 term:t2 PCLOSE:pr {: RESULT = Literal.createDistinct(t1, t2, plleft, prright); :}
-    | POPEN:pl OR literallist:ls PCLOSE:pr {: RESULT = Literal.createOr(ls, plleft, prright); :}
+literal ::= sentence:s            {: RESULT = Literal.createSentence(s, sxleft, sxright); :}
+    | POPEN:pl NOT literal:l PCLOSE:pr {: RESULT = Literal.createNot(l, plxleft, prxright); :}
+    | POPEN:pl DISTINCT term:t1 term:t2 PCLOSE:pr {: RESULT = Literal.createDistinct(t1, t2, plxleft, prxright); :}
+    | POPEN:pl OR literallist:ls PCLOSE:pr {: RESULT = Literal.createOr(ls, plxleft, prxright); :}
     ;
 termlist ::= termlist:ts term:t   {: ts.add(t); RESULT = ts; :}
     | /* empty list */            {: RESULT = new LinkedList<Term>(); :}
     ;
-term ::= CONSTANT:c               {: RESULT = Term.createConstant(c, cleft, cright); :}
-    | VARIABLE:v                  {: RESULT = Term.createVariable(v, vleft, vright); :}
-    | function:f                  {: RESULT = Term.createFunction(f, fleft, fright); :}
+term ::= CONSTANT:c               {: RESULT = Term.createConstant(c, cxleft, cxright); :}
+    | VARIABLE:v                  {: RESULT = Term.createVariable(v, vxleft, vxright); :}
+    | function:f                  {: RESULT = Term.createFunction(f, fxleft, fxright); :}
     ;
-function ::= POPEN:pl CONSTANT:c termlist:ts PCLOSE:pr {: RESULT = Function.create(c, cleft, cright, ts, plleft, prright); :}
+function ::= POPEN:pl CONSTANT:c termlist:ts PCLOSE:pr {: RESULT = Function.create(c, cxleft, cxright, ts, plxleft, prxright); :}
     ;

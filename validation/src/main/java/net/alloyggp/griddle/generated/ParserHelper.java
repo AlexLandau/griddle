@@ -3,7 +3,7 @@ package net.alloyggp.griddle.generated;
 import java.io.Reader;
 import java.util.List;
 
-import java_cup.runtime.DefaultSymbolFactory;
+import java_cup.runtime.ComplexSymbolFactory;
 import java_cup.runtime.Scanner;
 import java_cup.runtime.Symbol;
 import java_cup.runtime.SymbolFactory;
@@ -21,8 +21,7 @@ public class ParserHelper {
 	@SuppressWarnings("unchecked")
 	public static List<TopLevelGdl> parse(Reader input) throws Exception {
 		Scanner lexer = new GdlScanner(input);
-//		SymbolFactory symbolFactory = new ComplexSymbolFactory();
-		SymbolFactory symbolFactory = new DefaultSymbolFactory();
+		SymbolFactory symbolFactory = new ComplexSymbolFactory();
 		Symbol result = new GdlParser(lexer, symbolFactory).parse();
 		input.close();
 		return (List<TopLevelGdl>) result.value;

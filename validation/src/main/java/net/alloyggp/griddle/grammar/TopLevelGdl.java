@@ -1,5 +1,6 @@
 package net.alloyggp.griddle.grammar;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import net.alloyggp.griddle.Position;
 
 public class TopLevelGdl implements GdlVisitable {
@@ -15,18 +16,18 @@ public class TopLevelGdl implements GdlVisitable {
 		this.position = new Position(left, right, line);
 	}
 
-	public static TopLevelGdl create(Sentence sentence, int left, int right, int line) {
+	public static TopLevelGdl create(Sentence sentence, Location left, Location right) {
 		if (sentence == null) {
 			throw new NullPointerException();
 		}
-		return new TopLevelGdl(sentence, null, left, right, line);
+		return new TopLevelGdl(sentence, null, left.getOffset(), right.getOffset(), left.getLine());
 	}
 
-	public static TopLevelGdl create(Rule rule, int left, int right, int line) {
+	public static TopLevelGdl create(Rule rule, Location left, Location right) {
 		if (rule == null) {
 			throw new NullPointerException();
 		}
-		return new TopLevelGdl(null, rule, left, right, line);
+		return new TopLevelGdl(null, rule, left.getOffset(), right.getOffset(), left.getLine());
 	}
 
 	public boolean isSentence() {

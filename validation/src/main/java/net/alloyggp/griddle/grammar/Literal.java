@@ -2,6 +2,7 @@ package net.alloyggp.griddle.grammar;
 
 import java.util.List;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import net.alloyggp.griddle.Position;
 
 public class Literal implements GdlVisitable {
@@ -25,32 +26,32 @@ public class Literal implements GdlVisitable {
 		this.position = new Position(left, right, line);
 	}
 
-	public static Literal createOr(List<Literal> literals, int left, int right, int line) {
+	public static Literal createOr(List<Literal> literals, Location left, Location right) {
 		if (literals == null) {
 			throw new NullPointerException();
 		}
-		return new Literal(null, null, null, null, literals, left, right, line);
+		return new Literal(null, null, null, null, literals, left.getOffset(), right.getOffset(), left.getLine());
 	}
 
-	public static Literal createDistinct(Term term1, Term term2, int left, int right, int line) {
+	public static Literal createDistinct(Term term1, Term term2, Location left, Location right) {
 		if (term1 == null || term2 == null) {
 			throw new NullPointerException();
 		}
-		return new Literal(null, null, term1, term2, null, left, right, line);
+		return new Literal(null, null, term1, term2, null, left.getOffset(), right.getOffset(), left.getLine());
 	}
 
-	public static Literal createNot(Literal literal, int left, int right, int line) {
+	public static Literal createNot(Literal literal, Location left, Location right) {
 		if (literal == null) {
 			throw new NullPointerException();
 		}
-		return new Literal(null, literal, null, null, null, left, right, line);
+		return new Literal(null, literal, null, null, null, left.getOffset(), right.getOffset(), left.getLine());
 	}
 
-	public static Literal createSentence(Sentence sentence, int left, int right, int line) {
+	public static Literal createSentence(Sentence sentence, Location left, Location right) {
 		if (sentence == null) {
 			throw new NullPointerException();
 		}
-		return new Literal(sentence, null, null, null, null, left, right, line);
+		return new Literal(sentence, null, null, null, null, left.getOffset(), right.getOffset(), left.getLine());
 	}
 
 	public boolean isSentence() {

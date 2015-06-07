@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import net.alloyggp.griddle.Position;
 
 public class Function implements GdlVisitable {
@@ -24,10 +25,11 @@ public class Function implements GdlVisitable {
 		this.position = new Position(left, right, line);
 	}
 
-	public static Function create(String name, int nameLeft, int nameRight, int nameLine, List<Term> body, int left, int right, int line) {
-		return new Function(name, nameLeft, nameRight, nameLine,
+	public static Function create(String name, Location nameLeft, Location nameRight,
+			List<Term> body, Location left, Location right) {
+		return new Function(name, nameLeft.getOffset(), nameRight.getOffset(), nameLeft.getLine(),
 				Collections.unmodifiableList(new ArrayList<Term>(body)),
-				left, right, line);
+				left.getOffset(), right.getOffset(), left.getLine());
 	}
 
 	public String getName() {

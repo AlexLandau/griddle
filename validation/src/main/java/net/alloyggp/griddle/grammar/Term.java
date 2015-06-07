@@ -1,5 +1,6 @@
 package net.alloyggp.griddle.grammar;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import net.alloyggp.griddle.Position;
 
 public class Term implements GdlVisitable {
@@ -18,25 +19,25 @@ public class Term implements GdlVisitable {
 		this.position = new Position(left, right, line);
 	}
 
-	public static Term createFunction(Function f, int left, int right, int line) {
+	public static Term createFunction(Function f, Location left, Location right) {
 		if (f == null) {
 			throw new NullPointerException();
 		}
-		return new Term(null, null, f, left, right, line);
+		return new Term(null, null, f, left.getOffset(), right.getOffset(), left.getLine());
 	}
 
-	public static Term createVariable(String v, int left, int right, int line) {
+	public static Term createVariable(String v, Location left, Location right) {
 		if (v == null) {
 			throw new NullPointerException();
 		}
-		return new Term(null, v, null, left, right, line);
+		return new Term(null, v, null, left.getOffset(), right.getOffset(), left.getLine());
 	}
 
-	public static Term createConstant(String c, int left, int right, int line) {
+	public static Term createConstant(String c, Location left, Location right) {
 		if (c == null) {
 			throw new NullPointerException();
 		}
-		return new Term(c, null, null, left, right, line);
+		return new Term(c, null, null, left.getOffset(), right.getOffset(), left.getLine());
 	}
 
 	public boolean isConstant() {

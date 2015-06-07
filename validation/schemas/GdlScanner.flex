@@ -6,6 +6,7 @@ import java_cup.runtime.*;
 %%
 
 %class GdlScanner
+%apiprivate
 %unicode
 %cupsym Symbols
 %cup
@@ -15,13 +16,30 @@ import java_cup.runtime.*;
 %caseless
 
 %{
-    private Symbol symbol(int type) {
+    /*private Symbol symbol(int type) {
         return new Symbol(type, zzStartRead, zzMarkedPos);
     }
     private Symbol symbol(int type, Object value) {
         return new Symbol(type, zzStartRead, zzMarkedPos, value);
+    }*/
+    
+    private Symbol symbol(int type) {
+    	int length = zzMarkedPos - zzStartRead;
+        return new ComplexSymbolFactory.ComplexSymbol("", type,
+        		new Location(yyline, yycolumn, zzStartRead),
+        		new Location(yyline, yycolumn + length, zzMarkedPos));
+    }
+    private Symbol symbol(int type, Object value) {
+    	int length = zzMarkedPos - zzStartRead;
+        return new ComplexSymbolFactory.ComplexSymbol("", type,
+        		new Location(yyline, yycolumn, zzStartRead),
+        		new Location(yyline, yycolumn + length, zzMarkedPos), value);
     }
 %}
+
+%eofval{
+	return new java_cup.runtime.ComplexSymbolFactory.ComplexSymbol("", Symbols.EOF);
+%eofval}
 
 LineTerminator = \r|\n|\r\n
 InputCharacter = [^\r\n]

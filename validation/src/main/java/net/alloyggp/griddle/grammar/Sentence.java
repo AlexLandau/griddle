@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import net.alloyggp.griddle.Position;
 
 public class Sentence implements GdlVisitable {
@@ -25,17 +26,18 @@ public class Sentence implements GdlVisitable {
 		this.position = new Position(left, right, line);
 	}
 
-	public static Sentence create(String name, int nameLeft, int nameRight, int nameLine, List<Term> body, int left, int right, int line) {
+	public static Sentence create(String name, Location nameLeft, Location nameRight, List<Term> body, Location left, Location right) {
 		if (body == null) {
 			throw new NullPointerException();
 		}
-		return new Sentence(name, nameLeft, nameRight, nameLine,
+		return new Sentence(name, nameLeft.getOffset(), nameRight.getOffset(), nameLeft.getLine(),
 				Collections.unmodifiableList(new ArrayList<Term>(body)),
-				left, right, line);
+				left.getOffset(), right.getOffset(), left.getLine());
 	}
 
-	public static Sentence create(String name, int left, int right, int line) {
-		return new Sentence(name, left, right, line, null, left, right, line);
+	public static Sentence create(String name, Location left, Location right) {
+		return new Sentence(name, left.getOffset(), right.getOffset(), left.getLine(),
+				null, left.getOffset(), right.getOffset(), left.getLine());
 	}
 
 	public String getName() {

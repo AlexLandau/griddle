@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import net.alloyggp.griddle.Position;
 
 public class Rule implements GdlVisitable {
@@ -21,10 +22,10 @@ public class Rule implements GdlVisitable {
 		this.position = new Position(left, right, line);
 	}
 
-	public static Rule create(Sentence head, List<Literal> conjuncts, int left, int right, int line) {
+	public static Rule create(Sentence head, List<Literal> conjuncts, Location left, Location right) {
 		return new Rule(head,
 				Collections.unmodifiableList(new ArrayList<Literal>(conjuncts)),
-				left, right, line);
+				left.getOffset(), right.getOffset(), left.getLine());
 	}
 
 	public Sentence getHead() {
