@@ -1,5 +1,6 @@
 package net.alloyggp.griddle.editors;
 
+import org.eclipse.ui.editors.text.FileDocumentProvider;
 import org.eclipse.ui.editors.text.TextEditor;
 
 public class GdlEditor extends TextEditor {
@@ -10,7 +11,7 @@ public class GdlEditor extends TextEditor {
 		super();
 		colorManager = new ColorManager();
 		setSourceViewerConfiguration(new GdlConfiguration(colorManager));
-		setDocumentProvider(new XMLDocumentProvider());
+		setDocumentProvider(new FileDocumentProvider());
 //		this.getSourceViewer().getAnnotationModel().addAnnotation(
 //				new Annotation("org.eclipse.ui.workbench.texteditor.error", true, "I'm an annotation!"),
 //				new Position(1));

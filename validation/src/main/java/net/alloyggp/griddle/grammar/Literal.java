@@ -16,41 +16,41 @@ public class Literal implements GdlVisitable {
 	private final Position position;
 
 	private Literal(Sentence sentence, Literal negation, Term distinctTerm1,
-			Term distinctTerm2, List<Literal> disjunction, int left, int right) {
+			Term distinctTerm2, List<Literal> disjunction, int left, int right, int line) {
 		this.sentence = sentence;
 		this.negation = negation;
 		this.distinctTerm1 = distinctTerm1;
 		this.distinctTerm2 = distinctTerm2;
 		this.disjunction = disjunction;
-		this.position = new Position(left, right);
+		this.position = new Position(left, right, line);
 	}
 
-	public static Literal createOr(List<Literal> literals, int left, int right) {
+	public static Literal createOr(List<Literal> literals, int left, int right, int line) {
 		if (literals == null) {
 			throw new NullPointerException();
 		}
-		return new Literal(null, null, null, null, literals, left, right);
+		return new Literal(null, null, null, null, literals, left, right, line);
 	}
 
-	public static Literal createDistinct(Term term1, Term term2, int left, int right) {
+	public static Literal createDistinct(Term term1, Term term2, int left, int right, int line) {
 		if (term1 == null || term2 == null) {
 			throw new NullPointerException();
 		}
-		return new Literal(null, null, term1, term2, null, left, right);
+		return new Literal(null, null, term1, term2, null, left, right, line);
 	}
 
-	public static Literal createNot(Literal literal, int left, int right) {
+	public static Literal createNot(Literal literal, int left, int right, int line) {
 		if (literal == null) {
 			throw new NullPointerException();
 		}
-		return new Literal(null, literal, null, null, null, left, right);
+		return new Literal(null, literal, null, null, null, left, right, line);
 	}
 
-	public static Literal createSentence(Sentence sentence, int left, int right) {
+	public static Literal createSentence(Sentence sentence, int left, int right, int line) {
 		if (sentence == null) {
 			throw new NullPointerException();
 		}
-		return new Literal(sentence, null, null, null, null, left, right);
+		return new Literal(sentence, null, null, null, null, left, right, line);
 	}
 
 	public boolean isSentence() {

@@ -68,8 +68,38 @@ public class ValidatorTest extends Assert {
 		assertTrue(problems.size() == 1);
 		GdlProblem problem = problems.iterator().next();
 		assertTrue(problem.isError());
-		assertEquals(16, problem.getPosition().getStart());
-		assertEquals(17, problem.getPosition().getEnd());
+		//Unfortunately, Git repo checkouts may vary in local line endings
+		if (gameString.contains("\r")) {
+			//Windows-style whitespace
+			assertEquals(17, problem.getPosition().getStart());
+			assertEquals(18, problem.getPosition().getEnd());
+		} else {
+			//Unix-style whitespace
+			assertEquals(16, problem.getPosition().getStart());
+			assertEquals(17, problem.getPosition().getEnd());
+		}
+	}
+
+	@Test
+	public void testConsecutiveOpenParens4() throws Exception {
+		String gameString = getGameString("badparens4");
+		Set<GdlProblem> problems = ParenthesesValidator.INSTANCE.findProblems(gameString);
+		assertTrue(problems.size() == 1);
+		GdlProblem problem = problems.iterator().next();
+		assertTrue(problem.isError());
+		assertEquals(3, problem.getPosition().getStart());
+		assertEquals(4, problem.getPosition().getEnd());
+	}
+
+	@Test
+	public void testConsecutiveOpenParens5() throws Exception {
+		String gameString = getGameString("badparens5");
+		Set<GdlProblem> problems = ParenthesesValidator.INSTANCE.findProblems(gameString);
+		assertTrue(problems.size() == 1);
+		GdlProblem problem = problems.iterator().next();
+		assertTrue(problem.isError());
+		assertEquals(2, problem.getPosition().getStart());
+		assertEquals(3, problem.getPosition().getEnd());
 	}
 
 	private String getGameString(String gameName) throws IOException {

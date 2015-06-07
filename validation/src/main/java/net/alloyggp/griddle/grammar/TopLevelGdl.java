@@ -9,24 +9,24 @@ public class TopLevelGdl implements GdlVisitable {
 
 	private final Position position;
 
-	private TopLevelGdl(Sentence sentence, Rule rule, int left, int right) {
+	private TopLevelGdl(Sentence sentence, Rule rule, int left, int right, int line) {
 		this.sentence = sentence;
 		this.rule = rule;
-		this.position = new Position(left, right);
+		this.position = new Position(left, right, line);
 	}
 
-	public static TopLevelGdl create(Sentence sentence, int left, int right) {
+	public static TopLevelGdl create(Sentence sentence, int left, int right, int line) {
 		if (sentence == null) {
 			throw new NullPointerException();
 		}
-		return new TopLevelGdl(sentence, null, left, right);
+		return new TopLevelGdl(sentence, null, left, right, line);
 	}
 
-	public static TopLevelGdl create(Rule rule, int left, int right) {
+	public static TopLevelGdl create(Rule rule, int left, int right, int line) {
 		if (rule == null) {
 			throw new NullPointerException();
 		}
-		return new TopLevelGdl(null, rule, left, right);
+		return new TopLevelGdl(null, rule, left, right, line);
 	}
 
 	public boolean isSentence() {

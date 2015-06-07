@@ -7,6 +7,7 @@ import java.util.Map;
 import net.alloyggp.griddle.GdlProblem.Level;
 import net.alloyggp.griddle.validator.check.Check;
 import net.alloyggp.griddle.validator.check.ContainsRoleTerminalGoalLegalCheck;
+import net.alloyggp.griddle.validator.check.ContainsUnusualCharacterCheck;
 import net.alloyggp.griddle.validator.check.DatalogKeywordsNotConstantsCheck;
 import net.alloyggp.griddle.validator.check.DisjunctionNotNestedCheck;
 import net.alloyggp.griddle.validator.check.EmptyBodyCheck;
@@ -38,6 +39,7 @@ public class ValidatorConfiguration {
 		Map<Check, Level> checks = new HashMap<Check, Level>();
 
 		checks.put(ContainsRoleTerminalGoalLegalCheck.INSTANCE, Level.ERROR);
+		checks.put(ContainsUnusualCharacterCheck.INSTANCE, Level.WARNING);
 		checks.put(DatalogKeywordsNotConstantsCheck.INSTANCE, Level.ERROR);
 		checks.put(DisjunctionNotNestedCheck.INSTANCE, Level.WARNING);
 		checks.put(EmptyBodyCheck.INSTANCE, Level.WARNING);

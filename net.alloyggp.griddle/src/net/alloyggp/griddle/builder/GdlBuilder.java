@@ -151,6 +151,7 @@ public class GdlBuilder extends IncrementalProjectBuilder {
 			if (problem.getPosition() != null) {
 				marker.setAttribute(IMarker.CHAR_START, problem.getPosition().getStart());
 				marker.setAttribute(IMarker.CHAR_END, problem.getPosition().getEnd());
+				marker.setAttribute(IMarker.LOCATION, "line " + problem.getPosition().getLineNumber());
 			}
 		}
 	}

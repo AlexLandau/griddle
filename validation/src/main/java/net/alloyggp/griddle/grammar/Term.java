@@ -11,32 +11,32 @@ public class Term implements GdlVisitable {
 	private final Position position;
 
 	private Term(String constantName, String variableName, Function function,
-			int left, int right) {
+			int left, int right, int line) {
 		this.constantName = constantName;
 		this.variableName = variableName;
 		this.function = function;
-		this.position = new Position(left, right);
+		this.position = new Position(left, right, line);
 	}
 
-	public static Term createFunction(Function f, int left, int right) {
+	public static Term createFunction(Function f, int left, int right, int line) {
 		if (f == null) {
 			throw new NullPointerException();
 		}
-		return new Term(null, null, f, left, right);
+		return new Term(null, null, f, left, right, line);
 	}
 
-	public static Term createVariable(String v, int left, int right) {
+	public static Term createVariable(String v, int left, int right, int line) {
 		if (v == null) {
 			throw new NullPointerException();
 		}
-		return new Term(null, v, null, left, right);
+		return new Term(null, v, null, left, right, line);
 	}
 
-	public static Term createConstant(String c, int left, int right) {
+	public static Term createConstant(String c, int left, int right, int line) {
 		if (c == null) {
 			throw new NullPointerException();
 		}
-		return new Term(c, null, null, left, right);
+		return new Term(c, null, null, left, right, line);
 	}
 
 	public boolean isConstant() {

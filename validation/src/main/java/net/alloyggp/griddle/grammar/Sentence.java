@@ -14,28 +14,28 @@ public class Sentence implements GdlVisitable {
 	private final Position namePosition;
 	private final Position position;
 
-	private Sentence(String name, int nameLeft, int nameRight, List<Term> body, int left, int right) {
+	private Sentence(String name, int nameLeft, int nameRight, int nameLine, List<Term> body, int left, int right, int line) {
 		if (name == null) {
 			throw new NullPointerException();
 		}
 		this.name = name;
 		this.body = body;
 
-		this.namePosition = new Position(nameLeft, nameRight);
-		this.position = new Position(left, right);
+		this.namePosition = new Position(nameLeft, nameRight, nameLine);
+		this.position = new Position(left, right, line);
 	}
 
-	public static Sentence create(String name, int nameLeft, int nameRight, List<Term> body, int left, int right) {
+	public static Sentence create(String name, int nameLeft, int nameRight, int nameLine, List<Term> body, int left, int right, int line) {
 		if (body == null) {
 			throw new NullPointerException();
 		}
-		return new Sentence(name, nameLeft, nameRight,
+		return new Sentence(name, nameLeft, nameRight, nameLine,
 				Collections.unmodifiableList(new ArrayList<Term>(body)),
-				left, right);
+				left, right, line);
 	}
 
-	public static Sentence create(String name, int left, int right) {
-		return new Sentence(name, left, right, null, left, right);
+	public static Sentence create(String name, int left, int right, int line) {
+		return new Sentence(name, left, right, line, null, left, right, line);
 	}
 
 	public String getName() {

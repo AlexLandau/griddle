@@ -3,10 +3,12 @@ package net.alloyggp.griddle;
 public class Position {
 	private final int charStart;
 	private final int charEnd;
+	private final int lineNumber;
 
-	public Position(int charStart, int charEnd) {
+	public Position(int charStart, int charEnd, int lineNumber) {
 		this.charStart = charStart;
 		this.charEnd = charEnd;
+		this.lineNumber = lineNumber;
 	}
 
 	public int getStart() {
@@ -15,6 +17,10 @@ public class Position {
 
 	public int getEnd() {
 		return charEnd;
+	}
+
+	public int getLineNumber() {
+		return lineNumber;
 	}
 
 	@Override
@@ -45,6 +51,6 @@ public class Position {
 	@Override
 	public String toString() {
 		return "Position [charStart=" + charStart + ", charEnd=" + charEnd
-				+ "]";
+				+ ", lineNumber=" + lineNumber + "]";
 	}
 }

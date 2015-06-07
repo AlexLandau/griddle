@@ -12,19 +12,19 @@ public class Rule implements GdlVisitable {
 
 	private final Position position;
 
-	private Rule(Sentence head, List<Literal> conjuncts, int left, int right) {
+	private Rule(Sentence head, List<Literal> conjuncts, int left, int right, int line) {
 		if (head == null || conjuncts == null) {
 			throw new NullPointerException();
 		}
 		this.head = head;
 		this.conjuncts = conjuncts;
-		this.position = new Position(left, right);
+		this.position = new Position(left, right, line);
 	}
 
-	public static Rule create(Sentence head, List<Literal> conjuncts, int left, int right) {
+	public static Rule create(Sentence head, List<Literal> conjuncts, int left, int right, int line) {
 		return new Rule(head,
 				Collections.unmodifiableList(new ArrayList<Literal>(conjuncts)),
-				left, right);
+				left, right, line);
 	}
 
 	public Sentence getHead() {
