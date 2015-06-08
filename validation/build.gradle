@@ -12,6 +12,11 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
+//TODO: Consider making this a Maven dependency
+//TODO: Use the runtime jar instead
+    compile files(
+        'lib/java-cup-11b-runtime.jar'
+    )
 }
 
 // This was used to generate the Gradle wrapper.
