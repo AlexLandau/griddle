@@ -6,11 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.List;
 import java.util.Set;
 
 import net.alloyggp.griddle.generated.ParserHelper;
-import net.alloyggp.griddle.grammar.TopLevelGdl;
 import net.alloyggp.griddle.validator.AnalyzedGame;
 import net.alloyggp.griddle.validator.ConfigurableValidator;
 import net.alloyggp.griddle.validator.ParenthesesValidator;
@@ -22,11 +20,11 @@ import org.junit.Test;
 public class ValidatorTest extends Assert {
 	@Test
 	public void testParsing() throws Exception {
-		List<TopLevelGdl> game = ParserHelper.parse(getGameReader("ticTacToe"));
-		//TODO: Actually check something here?
-		System.out.println(game);
+		//This just tests if these can run without throwing exceptions.
+		ParserHelper.parse(getGameReader("ticTacToe"));
+
 		String gameString = getGameString("ticTacToe");
-		AnalyzedGame analyzedGame = AnalyzedGame.parseAndAnalyze(gameString);
+		AnalyzedGame.parseAndAnalyze(gameString);
 
 		ConfigurableValidator validator = ConfigurableValidator.create(Validators.getStandardConfiguration());
 		validator.findProblems(gameString);

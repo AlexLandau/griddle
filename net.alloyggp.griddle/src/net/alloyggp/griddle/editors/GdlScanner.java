@@ -17,10 +17,6 @@ import org.eclipse.swt.graphics.RGB;
 public class GdlScanner extends RuleBasedScanner {
 
 	public GdlScanner(ColorManager manager) {
-//		IToken procInstr =
-//			new Token(
-//				new TextAttribute(
-//					manager.getColor(GdlColorConstants.PROC_INSTR)));
 		IToken comment = createToken(GdlColorConstants.COMMENT, manager);
 		IToken implies = createToken(GdlColorConstants.DATALOG, manager);
 		IToken keyword = createToken(GdlColorConstants.KEYWORD, manager);
@@ -31,15 +27,12 @@ public class GdlScanner extends RuleBasedScanner {
 		List<IRule> rules = new ArrayList<IRule>();
 
 		rules.add(new EndOfLineRule(";", comment));
-		//Add rule for processing instructions
-//		rules[0] = new SingleLineRule("<?", "?>", procInstr);
 		// Add generic whitespace rule.
 		rules.add(new WhitespaceRule(new GdlWhitespaceDetector()));
 
 		rules.add(new WordRule(new ParensDetector(), parens));
-
 		rules.add(new WordRule(new VariableWordDetector(), variable));
-		//TODO: Add keyword exceptions to this rule
+
 		WordRule wordRule = new WordRule(new NormalWordDetector(), normal, true);
 		wordRule.addWord("<=", implies);
 		wordRule.addWord("or", implies);
@@ -55,8 +48,6 @@ public class GdlScanner extends RuleBasedScanner {
 		wordRule.addWord("base", keyword);
 		wordRule.addWord("input", keyword);
 		rules.add(wordRule);
-//		rules.add(new WordRule(normalWordDetector, normal));
-//		System.out.println("About to set rules in GdlScanner");
 
 		IRule[] rulesArray = new IRule[rules.size()];
 		setRules(rules.toArray(rulesArray));

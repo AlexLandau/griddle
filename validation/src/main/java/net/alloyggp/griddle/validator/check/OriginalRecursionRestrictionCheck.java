@@ -127,7 +127,6 @@ public class OriginalRecursionRestrictionCheck implements Check {
 	}
 
 	//TODO: Make this more efficient?
-	//TODO: Set to List
 	private static List<Term> intersectIgnorePosition(
 			List<List<Term>> termsToIntersect) {
 		if (termsToIntersect.isEmpty()) {

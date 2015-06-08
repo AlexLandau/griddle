@@ -31,10 +31,8 @@ public class AddBuilder extends AbstractHandler implements IHandler {
     // verify already registered builders
     if (hasBuilder(project)) {
      // already enabled
-    	System.out.println("Already has builder");
      return null;
     }
-    System.out.println("Adding builder");
 
     // add builder to project properties
     IProjectDescription description = project.getDescription();
@@ -45,11 +43,8 @@ public class AddBuilder extends AbstractHandler implements IHandler {
     commands.addAll(Arrays.asList(description.getBuildSpec()));
     commands.add(buildCommand);
 
-    System.out.println("Commands: " + commands);
-
     description.setBuildSpec(commands.toArray(new ICommand[commands.size()]));
     project.setDescription(description, null);
-    System.out.println("Setting project description, build spec");
 
    } catch (final CoreException e) {
     // TODO could not read/write project description
@@ -65,11 +60,9 @@ public class AddBuilder extends AbstractHandler implements IHandler {
   if (selection instanceof IStructuredSelection) {
    final Object element = ((IStructuredSelection) selection).getFirstElement();
 
-   System.out.println("Returning a project from the adapter");
    return (IProject) Platform.getAdapterManager().getAdapter(element, IProject.class);
   }
 
-  System.out.println("Returning a null project");
   return null;
  }
 

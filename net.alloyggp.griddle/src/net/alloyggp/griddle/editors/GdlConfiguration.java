@@ -19,7 +19,6 @@ import org.eclipse.jface.text.source.SourceViewerConfiguration;
 
 public class GdlConfiguration extends SourceViewerConfiguration {
 	private ITextDoubleClickStrategy doubleClickStrategy;
-//	private XMLTagScanner tagScanner;
 	private GdlScanner scanner;
 	private ColorManager colorManager;
 
@@ -30,8 +29,6 @@ public class GdlConfiguration extends SourceViewerConfiguration {
 	public String[] getConfiguredContentTypes(ISourceViewer sourceViewer) {
 		return new String[] {
 			IDocument.DEFAULT_CONTENT_TYPE,
-//			GdlPartitionScanner.GDL,
-//			GdlPartitionScanner.GDL_COMMENT
 			};
 	}
 	@Override
@@ -66,7 +63,7 @@ public class GdlConfiguration extends SourceViewerConfiguration {
 		return new DefaultAnnotationHover();
 	}
 
-	//TODO: Cache all these?
+	//TODO: Cache all these created objects?
 	@Override
 	public ITextHover getTextHover(ISourceViewer sourceViewer,
 			String contentType) {
@@ -76,16 +73,12 @@ public class GdlConfiguration extends SourceViewerConfiguration {
 	@Override
 	public String[] getIndentPrefixes(ISourceViewer sourceViewer,
 			String contentType) {
-		// TODO Auto-generated method stub
-//		return super.getIndentPrefixes(sourceViewer, contentType);
 		return new String[] { "    ", "\t" };
 	}
 
 	@Override
 	public IAutoEditStrategy[] getAutoEditStrategies(
 			ISourceViewer sourceViewer, String contentType) {
-		// TODO Auto-generated method stub
-//		return super.getAutoEditStrategies(sourceViewer, contentType);
 		return new IAutoEditStrategy[] {
 				new GdlAutoIndentStrategy()
 				};
@@ -96,13 +89,11 @@ public class GdlConfiguration extends SourceViewerConfiguration {
 		PresentationReconciler reconciler = new PresentationReconciler();
 
 		DefaultDamagerRepairer dr = new DefaultDamagerRepairer(getGdlScanner());
-		//TODO: Fix this?
+		//TODO: Check that this is doing what it's supposed to
 		reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
 		reconciler.setRepairer(dr, IDocument.DEFAULT_CONTENT_TYPE);
 
 		return reconciler;
 	}
-
-	//TODO: Override getIndentPrefixes?
 
 }

@@ -19,7 +19,7 @@ import net.alloyggp.griddle.grammar.TopLevelGdl;
 /** CUP v0.11b 20150326 (SVN rev 63) generated parser.
   */
 @SuppressWarnings({"rawtypes"})
-public class GdlParser<T> extends java_cup.runtime.lr_parser {
+public class GdlParser extends java_cup.runtime.lr_parser {
 
  @Override
 public final Class getSymbolContainer() {
@@ -120,7 +120,7 @@ public short[][] reduce_table() {return _reduce_table;}
   @Override
 protected void init_actions()
     {
-      action_obj = new CUP$GdlParser$actions<T>(this);
+      action_obj = new CUP$GdlParser$actions(this);
     }
 
   /** Invoke a user supplied parse action. */
@@ -158,11 +158,11 @@ public int error_sym() {return 1;}
 
 /** Cup generated class to encapsulate user supplied action code.*/
 @SuppressWarnings({"rawtypes", "unchecked", "unused"})
-class CUP$GdlParser$actions<T> {
-  private final GdlParser<T> parser;
+class CUP$GdlParser$actions {
+  private final GdlParser parser;
 
   /** Constructor */
-  CUP$GdlParser$actions(GdlParser<T> parser) {
+  CUP$GdlParser$actions(GdlParser parser) {
     this.parser = parser;
   }
 
@@ -248,7 +248,7 @@ class CUP$GdlParser$actions<T> {
               Rule RESULT =null;
 		Location plxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-4)).xleft;
 		Location plxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-4)).xright;
-		Object pl = ((java_cup.runtime.Symbol) CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-4)).value;
+		Object pl = (Object)((java_cup.runtime.Symbol) CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-4)).value;
 		Location sxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-2)).xleft;
 		Location sxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-2)).xright;
 		Sentence s = (Sentence)((java_cup.runtime.Symbol) CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-2)).value;
@@ -257,7 +257,7 @@ class CUP$GdlParser$actions<T> {
 		List<Literal> ls = (List<Literal>)((java_cup.runtime.Symbol) CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-1)).value;
 		Location prxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.peek()).xleft;
 		Location prxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.peek()).xright;
-		Object pr = ((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
+		Object pr = (Object)((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
 		 RESULT = Rule.create(s, ls, plxleft, prxright);
               CUP$GdlParser$result = parser.getSymbolFactory().newSymbol("rule",2, ((java_cup.runtime.Symbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-4)), ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), RESULT);
             }
@@ -281,7 +281,7 @@ class CUP$GdlParser$actions<T> {
               Sentence RESULT =null;
 		Location plxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-3)).xleft;
 		Location plxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-3)).xright;
-		Object pl = ((java_cup.runtime.Symbol) CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-3)).value;
+		Object pl = (Object)((java_cup.runtime.Symbol) CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-3)).value;
 		Location cxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-2)).xleft;
 		Location cxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-2)).xright;
 		String c = (String)((java_cup.runtime.Symbol) CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-2)).value;
@@ -290,7 +290,7 @@ class CUP$GdlParser$actions<T> {
 		List<Term> ts = (List<Term>)((java_cup.runtime.Symbol) CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-1)).value;
 		Location prxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.peek()).xleft;
 		Location prxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.peek()).xright;
-		Object pr = ((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
+		Object pr = (Object)((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
 		 RESULT = Sentence.create(c, cxleft, cxright, ts, plxleft, prxright);
               CUP$GdlParser$result = parser.getSymbolFactory().newSymbol("sentence",3, ((java_cup.runtime.Symbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-3)), ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), RESULT);
             }
@@ -338,13 +338,13 @@ class CUP$GdlParser$actions<T> {
               Literal RESULT =null;
 		Location plxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-3)).xleft;
 		Location plxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-3)).xright;
-		Object pl = ((java_cup.runtime.Symbol) CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-3)).value;
+		Object pl = (Object)((java_cup.runtime.Symbol) CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-3)).value;
 		Location lxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-1)).xleft;
 		Location lxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-1)).xright;
 		Literal l = (Literal)((java_cup.runtime.Symbol) CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-1)).value;
 		Location prxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.peek()).xleft;
 		Location prxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.peek()).xright;
-		Object pr = ((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
+		Object pr = (Object)((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
 		 RESULT = Literal.createNot(l, plxleft, prxright);
               CUP$GdlParser$result = parser.getSymbolFactory().newSymbol("literal",5, ((java_cup.runtime.Symbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-3)), ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), RESULT);
             }
@@ -356,7 +356,7 @@ class CUP$GdlParser$actions<T> {
               Literal RESULT =null;
 		Location plxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-4)).xleft;
 		Location plxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-4)).xright;
-		Object pl = ((java_cup.runtime.Symbol) CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-4)).value;
+		Object pl = (Object)((java_cup.runtime.Symbol) CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-4)).value;
 		Location t1xleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-2)).xleft;
 		Location t1xright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-2)).xright;
 		Term t1 = (Term)((java_cup.runtime.Symbol) CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-2)).value;
@@ -365,7 +365,7 @@ class CUP$GdlParser$actions<T> {
 		Term t2 = (Term)((java_cup.runtime.Symbol) CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-1)).value;
 		Location prxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.peek()).xleft;
 		Location prxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.peek()).xright;
-		Object pr = ((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
+		Object pr = (Object)((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
 		 RESULT = Literal.createDistinct(t1, t2, plxleft, prxright);
               CUP$GdlParser$result = parser.getSymbolFactory().newSymbol("literal",5, ((java_cup.runtime.Symbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-4)), ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), RESULT);
             }
@@ -377,13 +377,13 @@ class CUP$GdlParser$actions<T> {
               Literal RESULT =null;
 		Location plxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-3)).xleft;
 		Location plxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-3)).xright;
-		Object pl = ((java_cup.runtime.Symbol) CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-3)).value;
+		Object pl = (Object)((java_cup.runtime.Symbol) CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-3)).value;
 		Location lsxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-1)).xleft;
 		Location lsxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-1)).xright;
 		List<Literal> ls = (List<Literal>)((java_cup.runtime.Symbol) CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-1)).value;
 		Location prxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.peek()).xleft;
 		Location prxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.peek()).xright;
-		Object pr = ((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
+		Object pr = (Object)((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
 		 RESULT = Literal.createOr(ls, plxleft, prxright);
               CUP$GdlParser$result = parser.getSymbolFactory().newSymbol("literal",5, ((java_cup.runtime.Symbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-3)), ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), RESULT);
             }
@@ -455,7 +455,7 @@ class CUP$GdlParser$actions<T> {
               Function RESULT =null;
 		Location plxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-3)).xleft;
 		Location plxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-3)).xright;
-		Object pl = ((java_cup.runtime.Symbol) CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-3)).value;
+		Object pl = (Object)((java_cup.runtime.Symbol) CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-3)).value;
 		Location cxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-2)).xleft;
 		Location cxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-2)).xright;
 		String c = (String)((java_cup.runtime.Symbol) CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-2)).value;
@@ -464,7 +464,7 @@ class CUP$GdlParser$actions<T> {
 		List<Term> ts = (List<Term>)((java_cup.runtime.Symbol) CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-1)).value;
 		Location prxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.peek()).xleft;
 		Location prxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.peek()).xright;
-		Object pr = ((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
+		Object pr = (Object)((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
 		 RESULT = Function.create(c, cxleft, cxright, ts, plxleft, prxright);
               CUP$GdlParser$result = parser.getSymbolFactory().newSymbol("function",8, ((java_cup.runtime.Symbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-3)), ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), RESULT);
             }

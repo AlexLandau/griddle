@@ -12,10 +12,8 @@ public class GdlEditor extends TextEditor {
 		colorManager = new ColorManager();
 		setSourceViewerConfiguration(new GdlConfiguration(colorManager));
 		setDocumentProvider(new FileDocumentProvider());
-//		this.getSourceViewer().getAnnotationModel().addAnnotation(
-//				new Annotation("org.eclipse.ui.workbench.texteditor.error", true, "I'm an annotation!"),
-//				new Position(1));
 	}
+
 	@Override
 	public void dispose() {
 		colorManager.dispose();

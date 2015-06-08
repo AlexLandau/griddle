@@ -46,8 +46,6 @@ public class GdlBuilder extends IncrementalProjectBuilder {
 		try {
 			delta.accept(new GdlMarkingDeltaVisitor());
 		} catch (CoreException e) {
-			//TODO: Remove this?
-			e.printStackTrace();
 			//Do nothing
 		}
 	}
@@ -56,8 +54,6 @@ public class GdlBuilder extends IncrementalProjectBuilder {
 		try {
 			getProject().accept(new GdlMarkingVisitor());
 		} catch (CoreException e) {
-			//TODO: Remove this?
-			e.printStackTrace();
 			//Do nothing
 		}
 	}
@@ -75,8 +71,6 @@ public class GdlBuilder extends IncrementalProjectBuilder {
 					parseAndAddMarkers(resource);
 				}
 			} catch (CoreException e) {
-				//TODO: Remove this?
-				e.printStackTrace();
 				//Do nothing
 			}
 			//return true to continue visiting children.
@@ -101,8 +95,6 @@ public class GdlBuilder extends IncrementalProjectBuilder {
 					}
 				}
 			} catch (CoreException e) {
-				//TODO: Remove this?
-				e.printStackTrace();
 				//Do nothing
 			}
 			//return true to continue visiting children.
@@ -171,11 +163,6 @@ public class GdlBuilder extends IncrementalProjectBuilder {
 		return sb.toString();
 	}
 
-	//TODO: Figure this out
-//	@Override
-//	public ISchedulingRule getRule(int kind, Map<String, String> args) {
-//		// TODO Auto-generated method stub
-//		return super.getRule(kind, args);
-//	}
+	//TODO: Figure out what scheduling rule is appropriate for this builder
 
 }

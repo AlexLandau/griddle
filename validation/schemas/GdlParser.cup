@@ -1,6 +1,12 @@
-import java.util.List;
 import java.util.LinkedList;
-import net.alloyggp.griddle.grammar.*;
+import java.util.List;
+
+import net.alloyggp.griddle.grammar.Function;
+import net.alloyggp.griddle.grammar.Literal;
+import net.alloyggp.griddle.grammar.Rule;
+import net.alloyggp.griddle.grammar.Sentence;
+import net.alloyggp.griddle.grammar.Term;
+import net.alloyggp.griddle.grammar.TopLevelGdl;
 
 parser code {:
 

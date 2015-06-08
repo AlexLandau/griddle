@@ -132,7 +132,6 @@ public class AnalyzedGame {
 		return ruleDependencyGraph;
 	}
 
-	//TODO: Also switch over everything that should be using this
 	public List<Rule> getRules() {
 		return rules;
 	}
