@@ -7,7 +7,7 @@ The Griddle editor offers the following features:
 
 - Syntax highlighting
 - Errors and warnings for syntax mistakes and other potential problems
-- Intelligent indentation
+- Indentation assistance
 
 Additional features that may be included in the future:
 
@@ -15,7 +15,7 @@ Additional features that may be included in the future:
 - One-step reformatting or indentation correction for the entire file
 - Build system improvements (see "Building from source" below)
 
-Other possible features that won't happen unless there's demand:
+Other possible features that won't happen unless there's evidence of demand:
 
 - Improved support for the validation library as a stand-alone library
 - CLI for validation and error detection
@@ -26,7 +26,7 @@ Installation
 
 The plugin can be applied to an existing Eclipse installation using the following steps (older versions of Eclipse may need a different approach):
 
-1. Download the .jar file containing the plugin from https://github.com/AlexLandau/griddle/releases
+1. Download the .jar file containing the plugin from the Github repository's Releases section: https://github.com/AlexLandau/griddle/releases
 2. Locate the directory containing your Eclipse installation; this should include files like eclipse.ini and folders like features, plugins, and dropins.
 3. Add a folder named plugins to the dropins folder (or use an existing one if it's already there).
 4. Put the .jar file into the dropins folder.
@@ -75,4 +75,3 @@ Authorship
 ----------
 
 Griddle is written and maintained by Alex Landau. Email may be directed to griddle@alloyggp.net, but consider first if the "Issues" section of the Github repository is more applicable.
-
