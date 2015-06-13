@@ -7,13 +7,11 @@ import java.util.Set;
 
 import net.alloyggp.griddle.grammar.Function;
 import net.alloyggp.griddle.grammar.GdlVisitor;
-import net.alloyggp.griddle.grammar.Sentence;
-import net.alloyggp.griddle.grammar.Term;
 import net.alloyggp.griddle.validator.AnalyzedGame;
 
-public class KeywordsAreSentenceNamesCheck implements Check {
-	public static final KeywordsAreSentenceNamesCheck INSTANCE = new KeywordsAreSentenceNamesCheck();
-	private KeywordsAreSentenceNamesCheck() {
+public class KeywordsAreNotFunctionNamesCheck implements Check {
+	public static final KeywordsAreNotFunctionNamesCheck INSTANCE = new KeywordsAreNotFunctionNamesCheck();
+	private KeywordsAreNotFunctionNamesCheck() {
 		//Singleton
 	}
 
@@ -40,24 +38,6 @@ public class KeywordsAreSentenceNamesCheck implements Check {
 					reporter.report("The keyword " + function.getName() + " should only be used "
 							+ "as a sentence name.",
 							function.getNamePosition());
-				}
-				for (Term term : function.getBody()) {
-					if (term.isConstant() && isKeyword(term.getConstantName())) {
-						reporter.report("The keyword " + term.getUserFriendlyString() + " should only be used "
-								+ "as a sentence name.",
-								term.getPosition());
-					}
-				}
-			}
-
-			@Override
-			public void visitSentence(Sentence sentence) {
-				for (Term term : sentence.getBody()) {
-					if (term.isConstant() && isKeyword(term.getConstantName())) {
-						reporter.report("The keyword " + term.getUserFriendlyString() + " should only be used "
-								+ "as a sentence name.",
-								term.getPosition());
-					}
 				}
 			}
 

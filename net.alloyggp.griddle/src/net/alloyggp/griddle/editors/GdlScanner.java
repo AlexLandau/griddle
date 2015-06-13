@@ -18,7 +18,7 @@ public class GdlScanner extends RuleBasedScanner {
 
 	public GdlScanner(ColorManager manager) {
 		IToken comment = createToken(GdlColorConstants.COMMENT, manager);
-		IToken implies = createToken(GdlColorConstants.DATALOG, manager);
+		IToken datalog = createToken(GdlColorConstants.DATALOG, manager);
 		IToken keyword = createToken(GdlColorConstants.KEYWORD, manager);
 		IToken variable = createToken(GdlColorConstants.VARIABLE, manager);
 		IToken normal = createToken(GdlColorConstants.DEFAULT, manager);
@@ -34,9 +34,10 @@ public class GdlScanner extends RuleBasedScanner {
 		rules.add(new WordRule(new VariableWordDetector(), variable));
 
 		WordRule wordRule = new WordRule(new NormalWordDetector(), normal, true);
-		wordRule.addWord("<=", implies);
-		wordRule.addWord("or", implies);
-		wordRule.addWord("distinct", implies);
+		wordRule.addWord("<=", datalog);
+		wordRule.addWord("or", datalog);
+		wordRule.addWord("distinct", datalog);
+		wordRule.addWord("not", datalog);
 		wordRule.addWord("true", keyword);
 		wordRule.addWord("init", keyword);
 		wordRule.addWord("next", keyword);

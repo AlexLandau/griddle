@@ -50,6 +50,12 @@ termlist ::= termlist:ts term:t   {: ts.add(t); RESULT = ts; :}
 term ::= CONSTANT:c               {: RESULT = Term.createConstant(c, cxleft, cxright); :}
     | VARIABLE:v                  {: RESULT = Term.createVariable(v, vxleft, vxright); :}
     | function:f                  {: RESULT = Term.createFunction(f, fxleft, fxright); :}
+    /* The following only apply for error cases where one of these Datalog keywords is being
+       used out of place. */
+    | IMPLIES:i                   {: RESULT = Term.createConstant("<=", ixleft, ixright); :}
+    | DISTINCT:d                   {: RESULT = Term.createConstant("distinct", dxleft, dxright); :}
+    | OR:o                   {: RESULT = Term.createConstant("or", oxleft, oxright); :}
+    | NOT:n                   {: RESULT = Term.createConstant("not", nxleft, nxright); :}
     ;
 function ::= POPEN:pl CONSTANT:c termlist:ts PCLOSE:pr {: RESULT = Function.create(c, cxleft, cxright, ts, plxleft, prxright); :}
     ;
