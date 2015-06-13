@@ -18,24 +18,17 @@ import java_cup.runtime.Symbol;
 %caseless
 
 %{
-    /*private Symbol symbol(int type) {
-        return new Symbol(type, zzStartRead, zzMarkedPos);
-    }
-    private Symbol symbol(int type, Object value) {
-        return new Symbol(type, zzStartRead, zzMarkedPos, value);
-    }*/
-    
     private Symbol symbol(int type) {
     	int length = zzMarkedPos - zzStartRead;
         return new ComplexSymbolFactory.ComplexSymbol("", type,
-        		new Location(yyline, yycolumn, zzStartRead),
-        		new Location(yyline, yycolumn + length, zzMarkedPos));
+        		new Location(yyline, yycolumn, yychar),
+        		new Location(yyline, yycolumn + length, yychar + length));
     }
     private Symbol symbol(int type, Object value) {
     	int length = zzMarkedPos - zzStartRead;
         return new ComplexSymbolFactory.ComplexSymbol("", type,
-        		new Location(yyline, yycolumn, zzStartRead),
-        		new Location(yyline, yycolumn + length, zzMarkedPos), value);
+        		new Location(yyline, yycolumn, yychar),
+        		new Location(yyline, yycolumn + length, yychar + length), value);
     }
 %}
 
