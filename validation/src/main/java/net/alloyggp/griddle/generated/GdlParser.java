@@ -40,13 +40,14 @@ public final Class getSymbolContainer() {
   /** Production table. */
   protected static final short _production_table[][] =
     unpackFromStrings(new String[] {
-    "\000\024\000\002\002\004\000\002\002\004\000\002\002" +
+    "\000\030\000\002\002\004\000\002\002\004\000\002\002" +
     "\002\000\002\003\003\000\002\003\003\000\002\004\007" +
     "\000\002\005\003\000\002\005\006\000\002\006\004\000" +
     "\002\006\002\000\002\007\003\000\002\007\006\000\002" +
     "\007\007\000\002\007\006\000\002\010\004\000\002\010" +
     "\002\000\002\011\003\000\002\011\003\000\002\011\003" +
-    "\000\002\012\006" });
+    "\000\002\011\003\000\002\011\003\000\002\011\003\000" +
+    "\002\011\003\000\002\012\006" });
 
   /** Access to production table. */
   @Override
@@ -55,35 +56,48 @@ public short[][] production_table() {return _production_table;}
   /** Parse-action table. */
   protected static final short[][] _action_table =
     unpackFromStrings(new String[] {
-    "\000\045\000\010\002\uffff\005\uffff\012\uffff\001\002\000" +
+    "\000\051\000\010\002\uffff\005\uffff\012\uffff\001\002\000" +
     "\010\002\012\005\006\012\005\001\002\000\012\002\ufffb" +
     "\005\ufffb\006\ufffb\012\ufffb\001\002\000\006\004\013\012" +
     "\014\001\002\000\010\002\001\005\001\012\001\001\002" +
     "\000\010\002\ufffd\005\ufffd\012\ufffd\001\002\000\010\002" +
     "\ufffe\005\ufffe\012\ufffe\001\002\000\004\002\000\001\002" +
-    "\000\006\005\027\012\005\001\002\000\012\005\ufff2\006" +
-    "\ufff2\012\ufff2\013\ufff2\001\002\000\012\005\021\006\022" +
-    "\012\017\013\023\001\002\000\012\005\uffef\006\uffef\012" +
-    "\uffef\013\uffef\001\002\000\012\005\ufff1\006\ufff1\012\ufff1" +
-    "\013\ufff1\001\002\000\012\005\ufff3\006\ufff3\012\ufff3\013" +
-    "\ufff3\001\002\000\004\012\024\001\002\000\012\002\ufffa" +
-    "\005\ufffa\006\ufffa\012\ufffa\001\002\000\012\005\ufff0\006" +
-    "\ufff0\012\ufff0\013\ufff0\001\002\000\012\005\ufff2\006\ufff2" +
-    "\012\ufff2\013\ufff2\001\002\000\012\005\021\006\026\012" +
-    "\017\013\023\001\002\000\012\005\uffee\006\uffee\012\uffee" +
-    "\013\uffee\001\002\000\004\012\014\001\002\000\010\005" +
-    "\ufff8\006\ufff8\012\ufff8\001\002\000\010\005\032\006\035" +
-    "\012\005\001\002\000\012\007\036\010\040\011\037\012" +
-    "\014\001\002\000\010\005\ufff9\006\ufff9\012\ufff9\001\002" +
-    "\000\010\005\ufff7\006\ufff7\012\ufff7\001\002\000\010\002" +
-    "\ufffc\005\ufffc\012\ufffc\001\002\000\010\005\021\012\017" +
-    "\013\023\001\002\000\006\005\032\012\005\001\002\000" +
-    "\010\005\ufff8\006\ufff8\012\ufff8\001\002\000\010\005\032" +
-    "\006\042\012\005\001\002\000\010\005\ufff4\006\ufff4\012" +
-    "\ufff4\001\002\000\004\006\044\001\002\000\010\005\ufff6" +
-    "\006\ufff6\012\ufff6\001\002\000\010\005\021\012\017\013" +
-    "\023\001\002\000\004\006\047\001\002\000\010\005\ufff5" +
-    "\006\ufff5\012\ufff5\001\002" });
+    "\000\006\005\033\012\005\001\002\000\022\004\ufff2\005" +
+    "\ufff2\006\ufff2\007\ufff2\010\ufff2\011\ufff2\012\ufff2\013\ufff2" +
+    "\001\002\000\022\004\025\005\021\006\017\007\024\010" +
+    "\027\011\026\012\016\013\023\001\002\000\022\004\ufff1" +
+    "\005\ufff1\006\ufff1\007\ufff1\010\ufff1\011\ufff1\012\ufff1\013" +
+    "\ufff1\001\002\000\012\002\ufffa\005\ufffa\006\ufffa\012\ufffa" +
+    "\001\002\000\022\004\ufff3\005\ufff3\006\ufff3\007\ufff3\010" +
+    "\ufff3\011\ufff3\012\ufff3\013\ufff3\001\002\000\004\012\030" +
+    "\001\002\000\022\004\uffef\005\uffef\006\uffef\007\uffef\010" +
+    "\uffef\011\uffef\012\uffef\013\uffef\001\002\000\022\004\ufff0" +
+    "\005\ufff0\006\ufff0\007\ufff0\010\ufff0\011\ufff0\012\ufff0\013" +
+    "\ufff0\001\002\000\022\004\uffed\005\uffed\006\uffed\007\uffed" +
+    "\010\uffed\011\uffed\012\uffed\013\uffed\001\002\000\022\004" +
+    "\uffee\005\uffee\006\uffee\007\uffee\010\uffee\011\uffee\012\uffee" +
+    "\013\uffee\001\002\000\022\004\uffeb\005\uffeb\006\uffeb\007" +
+    "\uffeb\010\uffeb\011\uffeb\012\uffeb\013\uffeb\001\002\000\022" +
+    "\004\uffec\005\uffec\006\uffec\007\uffec\010\uffec\011\uffec\012" +
+    "\uffec\013\uffec\001\002\000\022\004\ufff2\005\ufff2\006\ufff2" +
+    "\007\ufff2\010\ufff2\011\ufff2\012\ufff2\013\ufff2\001\002\000" +
+    "\022\004\025\005\021\006\032\007\024\010\027\011\026" +
+    "\012\016\013\023\001\002\000\022\004\uffea\005\uffea\006" +
+    "\uffea\007\uffea\010\uffea\011\uffea\012\uffea\013\uffea\001\002" +
+    "\000\004\012\014\001\002\000\010\005\ufff8\006\ufff8\012" +
+    "\ufff8\001\002\000\010\005\036\006\041\012\005\001\002" +
+    "\000\012\007\042\010\044\011\043\012\014\001\002\000" +
+    "\010\005\ufff9\006\ufff9\012\ufff9\001\002\000\010\005\ufff7" +
+    "\006\ufff7\012\ufff7\001\002\000\010\002\ufffc\005\ufffc\012" +
+    "\ufffc\001\002\000\020\004\025\005\021\007\024\010\027" +
+    "\011\026\012\016\013\023\001\002\000\006\005\036\012" +
+    "\005\001\002\000\010\005\ufff8\006\ufff8\012\ufff8\001\002" +
+    "\000\010\005\036\006\046\012\005\001\002\000\010\005" +
+    "\ufff4\006\ufff4\012\ufff4\001\002\000\004\006\050\001\002" +
+    "\000\010\005\ufff6\006\ufff6\012\ufff6\001\002\000\020\004" +
+    "\025\005\021\007\024\010\027\011\026\012\016\013\023" +
+    "\001\002\000\004\006\053\001\002\000\010\005\ufff5\006" +
+    "\ufff5\012\ufff5\001\002" });
 
   /** Access to parse-action table. */
   @Override
@@ -92,22 +106,23 @@ public short[][] action_table() {return _action_table;}
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table =
     unpackFromStrings(new String[] {
-    "\000\045\000\004\002\003\001\001\000\010\003\006\004" +
+    "\000\051\000\004\002\003\001\001\000\010\003\006\004" +
     "\010\005\007\001\001\000\002\001\001\000\002\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\004\005\027\001\001\000\004\010\014" +
-    "\001\001\000\006\011\017\012\015\001\001\000\002\001" +
+    "\002\001\001\000\004\005\033\001\001\000\004\010\014" +
+    "\001\001\000\006\011\017\012\021\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\002\001\001\000\004\010\024\001" +
-    "\001\000\006\011\017\012\015\001\001\000\002\001\001" +
-    "\000\002\001\001\000\004\006\030\001\001\000\006\005" +
-    "\033\007\032\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\002\001\001\000\006\011\044\012" +
-    "\015\001\001\000\006\005\033\007\042\001\001\000\004" +
-    "\006\040\001\001\000\006\005\033\007\032\001\001\000" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\004" +
+    "\010\030\001\001\000\006\011\017\012\021\001\001\000" +
+    "\002\001\001\000\002\001\001\000\004\006\034\001\001" +
+    "\000\006\005\037\007\036\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\006" +
-    "\011\045\012\015\001\001\000\002\001\001\000\002\001" +
-    "\001" });
+    "\011\050\012\021\001\001\000\006\005\037\007\046\001" +
+    "\001\000\004\006\044\001\001\000\006\005\037\007\036" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\006\011\051\012\021\001\001\000\002\001\001" +
+    "\000\002\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   @Override
@@ -450,7 +465,55 @@ class CUP$GdlParser$actions {
           return CUP$GdlParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 19: // function ::= POPEN CONSTANT termlist PCLOSE
+          case 19: // term ::= IMPLIES
+            {
+              Term RESULT =null;
+		Location ixleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.peek()).xleft;
+		Location ixright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.peek()).xright;
+		Object i = (Object)((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
+		 RESULT = Term.createConstant("<=", ixleft, ixright);
+              CUP$GdlParser$result = parser.getSymbolFactory().newSymbol("term",7, ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), RESULT);
+            }
+          return CUP$GdlParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 20: // term ::= DISTINCT
+            {
+              Term RESULT =null;
+		Location dxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.peek()).xleft;
+		Location dxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.peek()).xright;
+		Object d = (Object)((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
+		 RESULT = Term.createConstant("distinct", dxleft, dxright);
+              CUP$GdlParser$result = parser.getSymbolFactory().newSymbol("term",7, ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), RESULT);
+            }
+          return CUP$GdlParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 21: // term ::= OR
+            {
+              Term RESULT =null;
+		Location oxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.peek()).xleft;
+		Location oxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.peek()).xright;
+		Object o = (Object)((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
+		 RESULT = Term.createConstant("or", oxleft, oxright);
+              CUP$GdlParser$result = parser.getSymbolFactory().newSymbol("term",7, ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), RESULT);
+            }
+          return CUP$GdlParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 22: // term ::= NOT
+            {
+              Term RESULT =null;
+		Location nxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.peek()).xleft;
+		Location nxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.peek()).xright;
+		Object n = (Object)((java_cup.runtime.Symbol) CUP$GdlParser$stack.peek()).value;
+		 RESULT = Term.createConstant("not", nxleft, nxright);
+              CUP$GdlParser$result = parser.getSymbolFactory().newSymbol("term",7, ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$GdlParser$stack.peek()), RESULT);
+            }
+          return CUP$GdlParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 23: // function ::= POPEN CONSTANT termlist PCLOSE
             {
               Function RESULT =null;
 		Location plxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$GdlParser$stack.elementAt(CUP$GdlParser$top-3)).xleft;

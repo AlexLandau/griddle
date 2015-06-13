@@ -19,7 +19,8 @@ public class DatalogKeywordsNotConstantsCheck implements Check {
 			public void visitConstant(String constant, Position position) {
 				if (constant.equalsIgnoreCase("<=")
 						|| constant.equalsIgnoreCase("distinct")
-						|| constant.equalsIgnoreCase("or")) {
+						|| constant.equalsIgnoreCase("or")
+						|| constant.equalsIgnoreCase("not")) {
 					reporter.report(constant + " is a reserved Datalog keyword, and appears to be"
 							+ " used as a constant here. Check your syntax.", position);
 				}

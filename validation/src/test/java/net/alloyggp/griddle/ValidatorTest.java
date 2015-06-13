@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.HashSet;
 import java.util.Set;
 
 import net.alloyggp.griddle.generated.ParserHelper;
@@ -13,6 +14,9 @@ import net.alloyggp.griddle.validator.AnalyzedGame;
 import net.alloyggp.griddle.validator.ConfigurableValidator;
 import net.alloyggp.griddle.validator.ParenthesesValidator;
 import net.alloyggp.griddle.validator.Validators;
+import net.alloyggp.griddle.validator.check.Check;
+import net.alloyggp.griddle.validator.check.DatalogKeywordsNotConstantsCheck;
+import net.alloyggp.griddle.validator.check.ProblemReporter;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -98,6 +102,29 @@ public class ValidatorTest extends Assert {
 		assertTrue(problem.isError());
 		assertEquals(2, problem.getPosition().getStart());
 		assertEquals(3, problem.getPosition().getEnd());
+	}
+
+	@Test
+	public void testMisplacedDatalogKeyword2() throws Exception {
+		String gameString = getGameString("misplacedDatalogKeyword2");
+		Set<GdlProblem> problems = findProblems(DatalogKeywordsNotConstantsCheck.INSTANCE, gameString);
+		assertTrue(problems.size() == 1);
+		GdlProblem problem = problems.iterator().next();
+		assertTrue(problem.isError());
+		assertEquals(5, problem.getPosition().getStart());
+		assertEquals(8, problem.getPosition().getEnd());
+	}
+
+	private Set<GdlProblem> findProblems(Check check, String gameString) throws Exception {
+		AnalyzedGame game = AnalyzedGame.parseAndAnalyze(gameString);
+		final Set<GdlProblem> problems = new HashSet<GdlProblem>();
+		check.findProblems(game, new ProblemReporter() {
+			@Override
+			public void report(String message, Position position) {
+				problems.add(GdlProblem.createError(message, position));
+			}
+		});
+		return problems;
 	}
 
 	private String getGameString(String gameName) throws IOException {
