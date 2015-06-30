@@ -55,12 +55,11 @@ class GdlScanner implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\1\0\1\1\2\2\1\3\1\0\1\1\1\4\4\1"+
-    "\1\5\1\2\1\6\2\1\1\7\1\1\1\10\4\1"+
-    "\1\11";
+    "\1\0\1\1\2\2\1\3\1\0\1\2\1\4\4\1"+
+    "\1\5\1\6\2\1\1\7\1\1\1\10\4\1\1\11";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[25];
+    int [] result = new int[24];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -86,12 +85,11 @@ class GdlScanner implements java_cup.runtime.Scanner {
 
   private static final String ZZ_ROWMAP_PACKED_0 =
     "\0\0\0\22\0\44\0\66\0\66\0\110\0\132\0\66"+
-    "\0\154\0\176\0\220\0\242\0\110\0\264\0\22\0\306"+
-    "\0\330\0\22\0\352\0\22\0\374\0\u010e\0\u0120\0\u0132"+
-    "\0\22";
+    "\0\154\0\176\0\220\0\242\0\110\0\22\0\264\0\306"+
+    "\0\22\0\330\0\22\0\352\0\374\0\u010e\0\u0120\0\22";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[25];
+    int [] result = new int[24];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -117,20 +115,19 @@ class GdlScanner implements java_cup.runtime.Scanner {
     "\1\2\1\3\2\4\1\5\1\6\1\7\1\10\1\11"+
     "\1\2\1\12\3\2\1\13\1\2\1\14\2\2\4\0"+
     "\2\2\1\0\12\2\2\0\1\4\41\0\1\15\4\0"+
-    "\2\15\1\0\12\15\1\7\1\3\1\4\2\16\2\7"+
-    "\1\16\12\7\1\2\4\0\2\2\1\0\1\2\1\17"+
-    "\11\2\4\0\2\2\1\0\3\2\1\20\7\2\4\0"+
-    "\2\2\1\0\10\2\1\21\2\2\4\0\2\2\1\0"+
-    "\11\2\1\22\1\16\1\3\1\4\17\16\1\2\4\0"+
-    "\2\2\1\0\4\2\1\23\6\2\4\0\2\2\1\0"+
-    "\5\2\1\24\5\2\4\0\2\2\1\0\5\2\1\25"+
-    "\5\2\4\0\2\2\1\0\3\2\1\26\7\2\4\0"+
-    "\2\2\1\0\6\2\1\27\4\2\4\0\2\2\1\0"+
-    "\7\2\1\30\3\2\4\0\2\2\1\0\5\2\1\31"+
-    "\4\2";
+    "\2\15\1\0\12\15\1\7\1\3\1\4\17\7\1\2"+
+    "\4\0\2\2\1\0\1\2\1\16\11\2\4\0\2\2"+
+    "\1\0\3\2\1\17\7\2\4\0\2\2\1\0\10\2"+
+    "\1\20\2\2\4\0\2\2\1\0\11\2\1\21\1\2"+
+    "\4\0\2\2\1\0\4\2\1\22\6\2\4\0\2\2"+
+    "\1\0\5\2\1\23\5\2\4\0\2\2\1\0\5\2"+
+    "\1\24\5\2\4\0\2\2\1\0\3\2\1\25\7\2"+
+    "\4\0\2\2\1\0\6\2\1\26\4\2\4\0\2\2"+
+    "\1\0\7\2\1\27\3\2\4\0\2\2\1\0\5\2"+
+    "\1\30\4\2";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[324];
+    int [] result = new int[306];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -168,10 +165,10 @@ class GdlScanner implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\0\2\1\2\11\1\0\1\1\1\11\21\1";
+    "\1\0\2\1\2\11\1\0\1\1\1\11\20\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[25];
+    int [] result = new int[24];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;

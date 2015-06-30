@@ -14,16 +14,22 @@ import net.alloyggp.griddle.grammar.TopLevelGdl;
  * (which is largely package-private) from other packages.
  */
 public class ParserHelper {
-	private ParserHelper() {
-		//Not instantiable
-	}
+    private ParserHelper() {
+        //Not instantiable
+    }
 
-	@SuppressWarnings("unchecked")
-	public static List<TopLevelGdl> parse(Reader input) throws Exception {
-		Scanner lexer = new GdlScanner(input);
-		SymbolFactory symbolFactory = new ComplexSymbolFactory();
-		Symbol result = new GdlParser(lexer, symbolFactory).parse();
-		input.close();
-		return (List<TopLevelGdl>) result.value;
-	}
+    /**
+     * This consumes and closes the input.
+     */
+    @SuppressWarnings("unchecked")
+    public static List<TopLevelGdl> parse(Reader input) throws Exception {
+        try {
+            Scanner lexer = new GdlScanner(input);
+            SymbolFactory symbolFactory = new ComplexSymbolFactory();
+            Symbol result = new GdlParser(lexer, symbolFactory).parse();
+            return (List<TopLevelGdl>) result.value;
+        } finally {
+            input.close();
+        }
+    }
 }

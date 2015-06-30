@@ -40,7 +40,7 @@ LineTerminator = \r|\n|\r\n
 InputCharacter = [^\r\n]
 WhiteSpace     = {LineTerminator} | [ \t\f]
 ConstantChar   = [^ \r\n\t\f()]
-ConstantCharStart = [^ \r\n\t\f()?]
+ConstantCharStart = [^ \r\n\t\f()?;]
 
 Comment = ";" {InputCharacter}* {LineTerminator}?
 
