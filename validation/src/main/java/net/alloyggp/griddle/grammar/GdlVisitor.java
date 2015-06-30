@@ -35,4 +35,7 @@ public abstract class GdlVisitor {
 	public void visitDisjunction(Literal disjunction) {
 		//Subclasses can override this to do something.
 	}
+    public void visitErrorString(String errorString, Position position) {
+        //Subclasses can override this to do something.
+    }
 }

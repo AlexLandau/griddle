@@ -11,6 +11,7 @@ import net.alloyggp.griddle.validator.check.ContainsUnusualCharacterCheck;
 import net.alloyggp.griddle.validator.check.DatalogKeywordsNotConstantsCheck;
 import net.alloyggp.griddle.validator.check.DisjunctionNotNestedCheck;
 import net.alloyggp.griddle.validator.check.EmptyBodyCheck;
+import net.alloyggp.griddle.validator.check.ErrorStringCheck;
 import net.alloyggp.griddle.validator.check.FixedArityCheck;
 import net.alloyggp.griddle.validator.check.InconsistentCapitalizationCheck;
 import net.alloyggp.griddle.validator.check.InitBaseInputAreConstantCheck;
@@ -43,6 +44,7 @@ public class ValidatorConfiguration {
 		checks.put(ContainsUnusualCharacterCheck.INSTANCE, Level.WARNING);
 		checks.put(DatalogKeywordsNotConstantsCheck.INSTANCE, Level.ERROR);
 		checks.put(DisjunctionNotNestedCheck.INSTANCE, Level.WARNING);
+		checks.put(ErrorStringCheck.INSTANCE, Level.ERROR);
 		checks.put(EmptyBodyCheck.INSTANCE, Level.WARNING);
 		checks.put(FixedArityCheck.INSTANCE, Level.WARNING);
 		checks.put(InconsistentCapitalizationCheck.INSTANCE, Level.ERROR);
