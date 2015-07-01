@@ -22,59 +22,59 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public class AddBuilder extends AbstractHandler implements IHandler {
 
- @Override
- public Object execute(final ExecutionEvent event) {
-  final IProject project = getProject(event);
+    @Override
+    public Object execute(final ExecutionEvent event) {
+        final IProject project = getProject(event);
 
-  if (project != null) {
-   try {
-    // verify already registered builders
-    if (hasBuilder(project)) {
-     // already enabled
-     return null;
+        if (project != null) {
+            try {
+                // verify already registered builders
+                if (hasBuilder(project)) {
+                    // already enabled
+                    return null;
+                }
+
+                // add builder to project properties
+                IProjectDescription description = project.getDescription();
+                final ICommand buildCommand = description.newCommand();
+                buildCommand.setBuilderName(GdlBuilder.BUILDER_ID);
+
+                final List<ICommand> commands = new ArrayList<ICommand>();
+                commands.addAll(Arrays.asList(description.getBuildSpec()));
+                commands.add(buildCommand);
+
+                description.setBuildSpec(commands.toArray(new ICommand[commands.size()]));
+                project.setDescription(description, null);
+
+            } catch (final CoreException e) {
+                // TODO could not read/write project description
+                e.printStackTrace();
+            }
+        }
+
+        return null;
     }
 
-    // add builder to project properties
-    IProjectDescription description = project.getDescription();
-    final ICommand buildCommand = description.newCommand();
-    buildCommand.setBuilderName(GdlBuilder.BUILDER_ID);
+    public static IProject getProject(final ExecutionEvent event) {
+        final ISelection selection = HandlerUtil.getCurrentSelection(event);
+        if (selection instanceof IStructuredSelection) {
+            final Object element = ((IStructuredSelection) selection).getFirstElement();
 
-    final List<ICommand> commands = new ArrayList<ICommand>();
-    commands.addAll(Arrays.asList(description.getBuildSpec()));
-    commands.add(buildCommand);
+            return (IProject) Platform.getAdapterManager().getAdapter(element, IProject.class);
+        }
 
-    description.setBuildSpec(commands.toArray(new ICommand[commands.size()]));
-    project.setDescription(description, null);
+        return null;
+    }
 
-   } catch (final CoreException e) {
-    // TODO could not read/write project description
-    e.printStackTrace();
-   }
-  }
+    public static final boolean hasBuilder(final IProject project) {
+        try {
+            for (final ICommand buildSpec : project.getDescription().getBuildSpec()) {
+                if (GdlBuilder.BUILDER_ID.equals(buildSpec.getBuilderName()))
+                    return true;
+            }
+        } catch (final CoreException e) {
+        }
 
-  return null;
- }
-
- public static IProject getProject(final ExecutionEvent event) {
-  final ISelection selection = HandlerUtil.getCurrentSelection(event);
-  if (selection instanceof IStructuredSelection) {
-   final Object element = ((IStructuredSelection) selection).getFirstElement();
-
-   return (IProject) Platform.getAdapterManager().getAdapter(element, IProject.class);
-  }
-
-  return null;
- }
-
- public static final boolean hasBuilder(final IProject project) {
-  try {
-   for (final ICommand buildSpec : project.getDescription().getBuildSpec()) {
-    if (GdlBuilder.BUILDER_ID.equals(buildSpec.getBuilderName()))
-     return true;
-   }
-  } catch (final CoreException e) {
-  }
-
-  return false;
- }
+        return false;
+    }
 }

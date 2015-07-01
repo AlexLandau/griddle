@@ -245,16 +245,16 @@ class GdlScanner implements java_cup.runtime.Scanner {
 
   /* user code: */
     private Symbol symbol(int type) {
-    	int length = zzMarkedPos - zzStartRead;
+        int length = zzMarkedPos - zzStartRead;
         return new ComplexSymbolFactory.ComplexSymbol("", type,
-        		new Location(yyline, yycolumn, yychar),
-        		new Location(yyline, yycolumn + length, yychar + length));
+                new Location(yyline, yycolumn, yychar),
+                new Location(yyline, yycolumn + length, yychar + length));
     }
     private Symbol symbol(int type, Object value) {
-    	int length = zzMarkedPos - zzStartRead;
+        int length = zzMarkedPos - zzStartRead;
         return new ComplexSymbolFactory.ComplexSymbol("", type,
-        		new Location(yyline, yycolumn, yychar),
-        		new Location(yyline, yycolumn + length, yychar + length), value);
+                new Location(yyline, yycolumn, yychar),
+                new Location(yyline, yycolumn + length, yychar + length), value);
     }
 
 
@@ -640,7 +640,7 @@ public java_cup.runtime.Symbol next_token() throws java.io.IOException {
       if (zzInput == YYEOF && zzStartRead == zzCurrentPos) {
         zzAtEOF = true;
             zzDoEOF();
-          { 	return new java_cup.runtime.ComplexSymbolFactory.ComplexSymbol("", Symbols.EOF);
+          {     return new java_cup.runtime.ComplexSymbolFactory.ComplexSymbol("", Symbols.EOF);
  }
       }
       else {

@@ -5,19 +5,19 @@ import org.eclipse.ui.editors.text.TextEditor;
 
 public class GdlEditor extends TextEditor {
 
-	private ColorManager colorManager;
+    private ColorManager colorManager;
 
-	public GdlEditor() {
-		super();
-		colorManager = new ColorManager();
-		setSourceViewerConfiguration(new GdlConfiguration(colorManager));
-		setDocumentProvider(new FileDocumentProvider());
-	}
+    public GdlEditor() {
+        super();
+        colorManager = new ColorManager();
+        setSourceViewerConfiguration(new GdlConfiguration(colorManager));
+        setDocumentProvider(new FileDocumentProvider());
+    }
 
-	@Override
-	public void dispose() {
-		colorManager.dispose();
-		super.dispose();
-	}
+    @Override
+    public void dispose() {
+        colorManager.dispose();
+        super.dispose();
+    }
 
 }

@@ -19,36 +19,36 @@ import org.eclipse.core.runtime.CoreException;
  */
 public class RemoveBuilder extends AbstractHandler implements IHandler {
 
- @Override
- public Object execute(final ExecutionEvent event) throws ExecutionException {
-  final IProject project = AddBuilder.getProject(event);
+    @Override
+    public Object execute(final ExecutionEvent event) throws ExecutionException {
+        final IProject project = AddBuilder.getProject(event);
 
-  if (project != null) {
-   try {
-    final IProjectDescription description = project.getDescription();
-    final List<ICommand> commands = new ArrayList<ICommand>();
-    commands.addAll(Arrays.asList(description.getBuildSpec()));
+        if (project != null) {
+            try {
+                final IProjectDescription description = project.getDescription();
+                final List<ICommand> commands = new ArrayList<ICommand>();
+                commands.addAll(Arrays.asList(description.getBuildSpec()));
 
-    boolean wasRemoved = false;
-    for (final ICommand buildSpec : description.getBuildSpec()) {
-     if (GdlBuilder.BUILDER_ID.equals(buildSpec.getBuilderName())) {
-      // remove builder
-    	 //TODO: Remove all markers from GDL files...
-    	 //TODO: Make that a call into GdlBuilder
-    	 wasRemoved = true;
-      commands.remove(buildSpec);
-     }
+                boolean wasRemoved = false;
+                for (final ICommand buildSpec : description.getBuildSpec()) {
+                    if (GdlBuilder.BUILDER_ID.equals(buildSpec.getBuilderName())) {
+                        // remove builder
+                        //TODO: Remove all markers from GDL files...
+                        //TODO: Make that a call into GdlBuilder
+                        wasRemoved = true;
+                        commands.remove(buildSpec);
+                    }
+                }
+                project.accept(GdlBuilder.getMarkerClearingVisitor());
+
+                description.setBuildSpec(commands.toArray(new ICommand[commands.size()]));
+                project.setDescription(description, null);
+            } catch (final CoreException e) {
+                // TODO could not read/write project description
+                e.printStackTrace();
+            }
+        }
+
+        return null;
     }
-    project.accept(GdlBuilder.getMarkerClearingVisitor());
-
-    description.setBuildSpec(commands.toArray(new ICommand[commands.size()]));
-    project.setDescription(description, null);
-   } catch (final CoreException e) {
-    // TODO could not read/write project description
-    e.printStackTrace();
-   }
-  }
-
-  return null;
- }
 }

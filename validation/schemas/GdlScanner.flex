@@ -19,21 +19,21 @@ import java_cup.runtime.Symbol;
 
 %{
     private Symbol symbol(int type) {
-    	int length = zzMarkedPos - zzStartRead;
+        int length = zzMarkedPos - zzStartRead;
         return new ComplexSymbolFactory.ComplexSymbol("", type,
-        		new Location(yyline, yycolumn, yychar),
-        		new Location(yyline, yycolumn + length, yychar + length));
+                new Location(yyline, yycolumn, yychar),
+                new Location(yyline, yycolumn + length, yychar + length));
     }
     private Symbol symbol(int type, Object value) {
-    	int length = zzMarkedPos - zzStartRead;
+        int length = zzMarkedPos - zzStartRead;
         return new ComplexSymbolFactory.ComplexSymbol("", type,
-        		new Location(yyline, yycolumn, yychar),
-        		new Location(yyline, yycolumn + length, yychar + length), value);
+                new Location(yyline, yycolumn, yychar),
+                new Location(yyline, yycolumn + length, yychar + length), value);
     }
 %}
 
 %eofval{
-	return new java_cup.runtime.ComplexSymbolFactory.ComplexSymbol("", Symbols.EOF);
+    return new java_cup.runtime.ComplexSymbolFactory.ComplexSymbol("", Symbols.EOF);
 %eofval}
 
 LineTerminator = \r|\n|\r\n
