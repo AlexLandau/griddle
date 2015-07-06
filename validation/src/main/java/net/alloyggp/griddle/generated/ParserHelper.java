@@ -1,6 +1,8 @@
 package net.alloyggp.griddle.generated;
 
 import java.io.Reader;
+import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import java_cup.runtime.ComplexSymbolFactory;
@@ -31,5 +33,22 @@ public class ParserHelper {
         } finally {
             input.close();
         }
+    }
+
+    /**
+     * Note: The output is not thread-safe.
+     */
+    public static List<Symbol> scan(String input, boolean includeCommentsAndWhitespace) throws Exception {
+        GdlScanner scanner = new GdlScanner(new StringReader(input));
+        scanner.setIncludeCommentsAndWhitespace(includeCommentsAndWhitespace);
+        List<Symbol> tokens = new ArrayList<Symbol>();
+        while (true) {
+            Symbol token = scanner.next_token();
+            tokens.add(token);
+            if (token.sym == Symbols.EOF) {
+                break;
+            }
+        }
+        return tokens;
     }
 }

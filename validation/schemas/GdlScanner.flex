@@ -18,6 +18,12 @@ import java_cup.runtime.Symbol;
 %caseless
 
 %{
+    private boolean includeCommentsAndWhitespace;
+    
+    public void setIncludeCommentsAndWhitespace(boolean newValue) {
+        this.includeCommentsAndWhitespace = newValue;
+    }
+    
     private Symbol symbol(int type) {
         int length = zzMarkedPos - zzStartRead;
         return new ComplexSymbolFactory.ComplexSymbol("", type,
@@ -44,10 +50,6 @@ ConstantCharStart = [^ \r\n\t\f()?;]
 
 Comment = ";" {InputCharacter}* {LineTerminator}?
 
-//TODO: Remove or use these
-//POpen = "("
-//PClose = ")"
-
 Variable = "?" {ConstantChar}+
 Constant = {ConstantCharStart} {ConstantChar}*
 
@@ -67,5 +69,5 @@ Constant = {ConstantCharStart} {ConstantChar}*
 <YYINITIAL> {Variable}  { return symbol(Symbols.VARIABLE, yytext()); }
 <YYINITIAL> {Constant}  { return symbol(Symbols.CONSTANT, yytext()); }
 
-<YYINITIAL> {Comment}   { /* ignore */ }
-<YYINITIAL> {WhiteSpace} { /* ignore */ }
+<YYINITIAL> {Comment}   { if (includeCommentsAndWhitespace) {return symbol(Symbols2.COMMENT, yytext());} }
+<YYINITIAL> {WhiteSpace} { if (includeCommentsAndWhitespace) {return symbol(Symbols2.WHITESPACE, yytext());} }
