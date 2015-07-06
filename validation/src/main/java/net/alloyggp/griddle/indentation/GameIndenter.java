@@ -96,6 +96,9 @@ public class GameIndenter {
         if (i == 0) {
             //TODO: handle this special case correctly?
             return whitespace;
+        } else if (i == tokens.size() - 1) {
+            //Shouldn't happen (EOF should be there) but just in case...
+            return whitespace;
         }
         int precedingType = tokens.get(i - 1).sym;
         int followingType = tokens.get(i + 1).sym;
