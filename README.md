@@ -8,11 +8,11 @@ The Griddle editor offers the following features:
 - Syntax highlighting
 - Errors and warnings for syntax mistakes and other potential problems
 - Indentation assistance
+- One-step whitespace reformatting for the entire file
 
 Additional features that may be included in the future:
 
 - Configuration of errors and warnings, including support for GDL-II and other proposed changes to GDL
-- One-step reformatting or indentation correction for the entire file
 - Build system improvements (see "Building from source" below)
 
 Other possible features that won't happen unless there's evidence of demand:
