@@ -15,6 +15,13 @@ public class GdlEditor extends TextEditor {
     }
 
     @Override
+    protected void initializeEditor() {
+        super.initializeEditor();
+        //If we don't do this, this gets set to just "#TextEditorContext", which is stupid.
+        setEditorContextMenuId("net.alloyggp.griddle.editors.GdlEditor#TextEditorContext");
+    }
+
+    @Override
     public void dispose() {
         colorManager.dispose();
         super.dispose();
