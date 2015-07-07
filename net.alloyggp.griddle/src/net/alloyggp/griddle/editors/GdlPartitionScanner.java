@@ -9,10 +9,10 @@ import org.eclipse.jface.text.rules.RuleBasedPartitionScanner;
 //TODO: See if I can eliminate this class
 public class GdlPartitionScanner extends RuleBasedPartitionScanner {
 
-	public GdlPartitionScanner() {
-		List<IPredicateRule> rules = new ArrayList<IPredicateRule>();
+    public GdlPartitionScanner() {
+        List<IPredicateRule> rules = new ArrayList<IPredicateRule>();
 
-		IPredicateRule[] rulesArray = new IPredicateRule[rules.size()];
-		setPredicateRules(rules.toArray(rulesArray));
-	}
+        IPredicateRule[] rulesArray = new IPredicateRule[rules.size()];
+        setPredicateRules(rules.toArray(rulesArray));
+    }
 }

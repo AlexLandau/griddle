@@ -9,6 +9,6 @@ import net.alloyggp.griddle.validator.AnalyzedGame;
  */
 public interface Check {
 
-	void findProblems(AnalyzedGame game, ProblemReporter reporter);
+    void findProblems(AnalyzedGame game, ProblemReporter reporter);
 
 }

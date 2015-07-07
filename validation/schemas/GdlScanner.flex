@@ -18,35 +18,37 @@ import java_cup.runtime.Symbol;
 %caseless
 
 %{
+    private boolean includeCommentsAndWhitespace;
+    
+    public void setIncludeCommentsAndWhitespace(boolean newValue) {
+        this.includeCommentsAndWhitespace = newValue;
+    }
+    
     private Symbol symbol(int type) {
-    	int length = zzMarkedPos - zzStartRead;
+        int length = zzMarkedPos - zzStartRead;
         return new ComplexSymbolFactory.ComplexSymbol("", type,
-        		new Location(yyline, yycolumn, yychar),
-        		new Location(yyline, yycolumn + length, yychar + length));
+                new Location(yyline, yycolumn, yychar),
+                new Location(yyline, yycolumn + length, yychar + length));
     }
     private Symbol symbol(int type, Object value) {
-    	int length = zzMarkedPos - zzStartRead;
+        int length = zzMarkedPos - zzStartRead;
         return new ComplexSymbolFactory.ComplexSymbol("", type,
-        		new Location(yyline, yycolumn, yychar),
-        		new Location(yyline, yycolumn + length, yychar + length), value);
+                new Location(yyline, yycolumn, yychar),
+                new Location(yyline, yycolumn + length, yychar + length), value);
     }
 %}
 
 %eofval{
-	return new java_cup.runtime.ComplexSymbolFactory.ComplexSymbol("", Symbols.EOF);
+    return new java_cup.runtime.ComplexSymbolFactory.ComplexSymbol("", Symbols.EOF);
 %eofval}
 
 LineTerminator = \r|\n|\r\n
 InputCharacter = [^\r\n]
 WhiteSpace     = {LineTerminator} | [ \t\f]
 ConstantChar   = [^ \r\n\t\f()]
-ConstantCharStart = [^ \r\n\t\f()?]
+ConstantCharStart = [^ \r\n\t\f()?;]
 
 Comment = ";" {InputCharacter}* {LineTerminator}?
-
-//TODO: Remove or use these
-//POpen = "("
-//PClose = ")"
 
 Variable = "?" {ConstantChar}+
 Constant = {ConstantCharStart} {ConstantChar}*
@@ -67,5 +69,5 @@ Constant = {ConstantCharStart} {ConstantChar}*
 <YYINITIAL> {Variable}  { return symbol(Symbols.VARIABLE, yytext()); }
 <YYINITIAL> {Constant}  { return symbol(Symbols.CONSTANT, yytext()); }
 
-<YYINITIAL> {Comment}   { /* ignore */ }
-<YYINITIAL> {WhiteSpace} { /* ignore */ }
+<YYINITIAL> {Comment}   { if (includeCommentsAndWhitespace) {return symbol(Symbols2.COMMENT, yytext());} }
+<YYINITIAL> {WhiteSpace} { if (includeCommentsAndWhitespace) {return symbol(Symbols2.WHITESPACE, yytext());} }

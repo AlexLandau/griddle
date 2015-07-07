@@ -33,6 +33,11 @@
     </command>
     <command defaultHandler="net.alloyggp.griddle.builder.RemoveBuilder" id="net.alloyggp.griddle.removeBuilder" name="Remove GDL Validation">
     </command>
+    <command
+          defaultHandler="net.alloyggp.griddle.actions.FormatGdlAction"
+          id="net.alloyggp.griddle.reformatGdl"
+          name="Reformat GDL">
+    </command>
 </extension>
    <extension point="org.eclipse.ui.menus">
     <menuContribution allPopups="false" locationURI="popup:org.eclipse.ui.projectConfigure?after=additions">
@@ -40,6 +45,15 @@
         </command>
         <command commandId="net.alloyggp.griddle.removeBuilder" style="push">
         </command>
+    </menuContribution>
+    <menuContribution
+          allPopups="false"
+          locationURI="popup:net.alloyggp.griddle.editors.GdlEditor#TextEditorContext?after=additions">
+       <command
+             commandId="net.alloyggp.griddle.reformatGdl"
+             label="Reformat GDL"
+             style="push">
+       </command>
     </menuContribution>
    </extension>
 
