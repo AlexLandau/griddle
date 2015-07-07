@@ -15,9 +15,6 @@ public class GameIndenter {
 
     //Returns null if the indentation fails.
     public static String reindentGameDescription(String gameRules) throws Exception {
-        //TODO: Handle comments
-        //TODO: Handle additional newlines
-
         List<Symbol> tokens = ParserHelper.scan(gameRules, true);
         tokens = collapseWhitespaceTokens(tokens);
 
@@ -94,7 +91,13 @@ public class GameIndenter {
     private static String rewriteWhitespace(String whitespace, List<Symbol> tokens,
             int i, int parensLevel, int nestingLevel) {
         if (i == 0) {
-            //TODO: handle this special case correctly?
+            if (tokens.size() == 1) {
+                return whitespace;
+            }
+            int followingType = tokens.get(1).sym;
+            if (followingType == Symbols.POPEN || followingType == Symbols.CONSTANT) {
+                return removeNonNewlineWhitespace(whitespace);
+            }
             return whitespace;
         } else if (i == tokens.size() - 1) {
             //Shouldn't happen (EOF should be there) but just in case...
@@ -107,18 +110,37 @@ public class GameIndenter {
             return "";
         } else if (isWord(precedingType) && followingType == Symbols.PCLOSE) {
             return "";
+        } else if (precedingType == Symbols.PCLOSE && followingType == Symbols.PCLOSE) {
+            return "";
         } else if ((isWord(precedingType) || precedingType == Symbols.PCLOSE)
                 && (isWord(followingType) || followingType == Symbols.POPEN)) {
             if (precedingType == Symbols.IMPLIES || precedingType == Symbols.OR) {
                 return " ";
+            } else if (parensLevel == 0) {
+                //Preserve extra newlines
+                String removed = removeNonNewlineWhitespace(whitespace);
+                if (removed.equals("")) {
+                    return "\n";
+                }
+                return removed;
             } else if (parensLevel == nestingLevel) {
                 return "\n" + nIndents(nestingLevel);
             } else {
                 return " ";
             }
+        } else if (parensLevel == 0 && precedingType == Symbols2.COMMENT &&
+                (isWord(followingType) || followingType == Symbols.POPEN)) {
+            return removeNonNewlineWhitespace(whitespace);
+        } else if (parensLevel == 0 && followingType == Symbols2.COMMENT &&
+                (isWord(precedingType) || precedingType == Symbols.PCLOSE)) {
+            return removeNonNewlineWhitespace(whitespace);
         }
 
         return whitespace;
+    }
+
+    private static String removeNonNewlineWhitespace(String whitespace) {
+        return whitespace.replaceAll("[^\r\n]", "");
     }
 
     private static String nIndents(int nestingLevel) {

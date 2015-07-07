@@ -13,5 +13,13 @@ public class GameIndenterTest extends Assert {
         String transformed = GameIndenter.reindentGameDescription(before);
         assertEquals(after, transformed);
     }
-    //TODO: Add more test cases
+
+    @Test
+    public void testCase2() throws Exception {
+        String before = TestGames.getGameString("formatter2Before");
+        String after = TestGames.getGameString("formatter2After");
+        String transformed = GameIndenter.reindentGameDescription(before);
+        assertEquals(after, transformed);
+    }
+
 }
