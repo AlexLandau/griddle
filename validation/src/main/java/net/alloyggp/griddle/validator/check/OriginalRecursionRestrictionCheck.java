@@ -29,21 +29,9 @@ public class OriginalRecursionRestrictionCheck implements Check {
                 // is in a cycle with the head.
                 Set<Term> termsInNonRecursivePositiveConjuncts = getTermsInNonRecursivePositiveConjuncts(rule, game);
 
-                for (Literal conjunct : rule.getConjuncts()) {
-                    if (conjunct.isSentence()) {
-                        reportViolationsIfCyclic(game, reporter, rule,
-                                termsInNonRecursivePositiveConjuncts,
-                                conjunct.getSentence());
-                    } else if (conjunct.isDisjunction()) {
-                        //Check sentences in disjunctions
-                        for (Literal disjunct : conjunct.getDisjunction()) {
-                            if (disjunct.isSentence()) {
-                                reportViolationsIfCyclic(game, reporter, rule,
-                                        termsInNonRecursivePositiveConjuncts,
-                                        disjunct.getSentence());
-                            }
-                        }
-                    }
+                for (Sentence sentence : rule.getAllPositiveConjuncts()) {
+                    reportViolationsIfCyclic(game, reporter, rule,
+                            termsInNonRecursivePositiveConjuncts, sentence);
                 }
             }
 

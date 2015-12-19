@@ -94,4 +94,25 @@ public class Rule implements GdlVisitable {
         }
     }
 
+    /**
+     * This returns conjuncts of the rule that are either positive conjuncts
+     * directly in the rule or positive conjuncts in a (possibly nested) disjunction.
+     */
+    //TODO: Examine existing checks, see which should use this instead
+    public List<Sentence> getAllPositiveConjuncts() {
+        List<Sentence> result = new ArrayList<Sentence>();
+        addPositiveConjuncts(result, conjuncts);
+        return result;
+    }
+
+    private static void addPositiveConjuncts(List<Sentence> result, List<Literal> conjuncts) {
+        for (Literal conjunct : conjuncts) {
+            if (conjunct.isSentence()) {
+                result.add(conjunct.getSentence());
+            } else if (conjunct.isDisjunction()) {
+                addPositiveConjuncts(result, conjunct.getDisjunction());
+            }
+        }
+    }
+
 }
