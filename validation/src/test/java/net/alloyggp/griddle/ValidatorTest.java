@@ -128,6 +128,16 @@ public class ValidatorTest extends Assert {
         assertEquals(15, problem.getPosition().getEnd());
     }
 
+    @Test
+    public void testEmptyDisjunction() throws Exception {
+        String gameString = TestGames.getGameString("emptyDisjunction");
+        Set<GdlProblem> problems = Validators.getStandardValidator().findProblems(gameString);
+        assertEquals(1, problems.size());
+        GdlProblem problem = problems.iterator().next();
+        assertEquals(31, problem.getPosition().getStart());
+        assertEquals(36, problem.getPosition().getEnd());
+    }
+
     private Set<GdlProblem> findProblems(Check check, String gameString) throws Exception {
         AnalyzedGame game = AnalyzedGame.parseAndAnalyze(gameString);
         final Set<GdlProblem> problems = new HashSet<GdlProblem>();
