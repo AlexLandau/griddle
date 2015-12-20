@@ -29,6 +29,7 @@ import net.alloyggp.griddle.validator.check.TerminalLegalGoalAreNotActionDepende
 import net.alloyggp.griddle.validator.check.TrueDoesAreNotStandaloneSentencesCheck;
 import net.alloyggp.griddle.validator.check.UnproducedSentenceNamesCheck;
 import net.alloyggp.griddle.validator.check.UnusedSentenceNamesCheck;
+import net.alloyggp.griddle.validator.check.VariablesOnlyInRulesCheck;
 
 public class ValidatorConfiguration {
     private final Map<Check, Level> checks;
@@ -63,6 +64,7 @@ public class ValidatorConfiguration {
         checks.put(TrueDoesAreNotStandaloneSentencesCheck.INSTANCE, Level.ERROR);
         checks.put(UnproducedSentenceNamesCheck.INSTANCE, Level.WARNING);
         checks.put(UnusedSentenceNamesCheck.INSTANCE, Level.WARNING);
+        checks.put(VariablesOnlyInRulesCheck.INSTANCE, Level.ERROR);
 
         return new ValidatorConfiguration(checks);
     }
