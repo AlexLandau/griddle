@@ -24,7 +24,7 @@ Other possible features that won't happen unless there's evidence of demand:
 Installation
 ------------
 
-The plugin can be applied to an existing Eclipse installation using the following steps (older versions of Eclipse may need a different approach):
+The plugin requires Eclipse Luna or a later version. (Eclipse versions are ordered alphabetically.) Griddle can be added to an existing Eclipse installation using the following steps:
 
 1. Download the .jar file containing the plugin from the Github repository's Releases section: https://github.com/AlexLandau/griddle/releases
 2. Locate the directory containing your Eclipse installation; this should include files like eclipse.ini and folders like features, plugins, and dropins.
